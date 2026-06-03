@@ -78,9 +78,9 @@ export default function Navbar() {
             : "py-6 bg-transparent border-b border-transparent"
         }`}
       >
-        <div className="container mx-auto px-6 max-w-6xl grid grid-cols-2 md:grid-cols-3 items-center">
+        <div className="container mx-auto px-6 max-w-6xl flex items-center justify-between w-full">
           {/* Column 1: Logo (Left) */}
-          <div className="flex justify-start">
+          <div className="flex-1 flex justify-start">
             <button
               onClick={() => scrollToSection("home")}
               className="font-display font-semibold text-3xl tracking-[0.1em] text-rose-dark italic cursor-pointer focus:outline-none"
@@ -92,7 +92,7 @@ export default function Navbar() {
           </div>
 
           {/* Column 2: Nav Links (Center) */}
-          <div className="hidden md:flex justify-center items-center gap-6">
+          <div className="hidden md:flex flex-initial justify-center items-center gap-6">
             {navItems.map((item) => {
               const isActive = activeSection === item.id;
               return (
@@ -114,7 +114,7 @@ export default function Navbar() {
           </div>
 
           {/* Column 3: Action Trigger / Mobile menu (Right) */}
-          <div className="flex justify-end items-center">
+          <div className="flex-1 flex justify-end items-center">
             {/* Morphing Hamburger Button (Mobile Only) */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
