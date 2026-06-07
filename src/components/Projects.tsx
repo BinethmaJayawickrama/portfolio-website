@@ -1,7 +1,9 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { Github, ArrowUpRight, ArrowRight } from "lucide-react";
+import { useEffect, useState } from "react";
+import { ArrowUpRight, X, Calendar, Code, CheckCircle, ExternalLink } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { gsap } from "gsap";
 
 interface Project {
   id: string;
@@ -9,6 +11,9 @@ interface Project {
   category: string;
   tagline: string;
   description: string;
+  longDescription: string;
+  challenges: string[];
+  results: string[];
   tech: string[];
   link: string;
   emoji: string;
@@ -22,10 +27,21 @@ const projects: Project[] = [
     category: "AI & Interactive Sales",
     tagline: "AI-Powered Conversational Sales Kiosk (2025–2026)",
     description: "An AI-powered sales kiosk that synchronizes video presence tracking with speech interfaces and interactive recommendations.",
+    longDescription: "Adorix redefines interactive retail kiosks by combining edge computer vision and real-time Conversational AI. Built to operate in offline/low-latency environments, it detects customer engagement levels through facial presence tracking, welcomes them via synthesize-speech, and navigates product catalogues through structured voice dialogue. The backend synchronizes video inputs with FastAPI endpoints to serve low-latency interactions.",
+    challenges: [
+      "Optimizing Mediapipe landmark detection to run at 30fps on low-power kiosk hardware.",
+      "Achieving sub-500ms voice-to-text response latency over WebSockets.",
+      "Designing a state-management machine that resolves interrupted conversations gracefully."
+    ],
+    results: [
+      "Built a functional prototype running facial presence sweeps with zero frame drops.",
+      "Reduced speech latency to 420ms by implementing streaming audio pipelines.",
+      "Implemented a Supabase sync backend mapping metrics on customer interest profiles."
+    ],
     tech: ["Python", "OpenCV", "FastAPI", "React.js", "Tailwind CSS", "WebSockets", "Supabase"],
     link: "https://github.com/ADORIX000",
     emoji: "🤖",
-    gradient: "from-rose-lightest to-rose-soft/45",
+    gradient: "from-red-500/20 to-orange-500/20 border-red-500/30",
   },
   {
     id: "02",
@@ -33,10 +49,21 @@ const projects: Project[] = [
     category: "IoT Systems",
     tagline: "IoT Cattle Heat Detection System (2026, ongoing)",
     description: "An smart IoT agricultural system running telemetry sweeps to flag health and cattle heat markers using hardware sensors.",
+    longDescription: "The Smart Tail Pod is an agricultural-tech wearable designed to monitor livestock health metrics in real-time. Attaching a lightweight sensor to the animal's tail, the pod sweeps temperature, movement speed, and tail position telemetry. This data is transmitted to an ESP32 edge receiver and processed to flag active heat cycles, improving breeding rates for dairy farms.",
+    challenges: [
+      "Optimizing ESP32 deep-sleep modes to ensure a battery lifespan of over 6 months.",
+      "Filtering out false positive movements caused by mathematical low-pass filters.",
+      "Establishing reliable long-range radio (LoRa) connections in rural, high-interference environments."
+    ],
+    results: [
+      "Configured ESP32 telemetry cycles reducing power consumption by 65%.",
+      "Achieved a 92% cycle detection accuracy during initial testing stages.",
+      "Created a web dashboard displaying real-time livestock telemetry charts."
+    ],
     tech: ["ESP32", "IoT Sensors", "Python", "React.js", "Firebase", "JavaScript"],
     link: "",
     emoji: "🐄",
-    gradient: "from-rose-soft to-rose-mid/30",
+    gradient: "from-green-500/20 to-emerald-500/20 border-green-500/30",
   },
   {
     id: "03",
@@ -44,10 +71,21 @@ const projects: Project[] = [
     category: "Full-Stack E-Commerce",
     tagline: "Premium Digital E-Commerce Platform (2026)",
     description: "High-performance digital account storefront utilizing microservice APIs, state sync, and secure transactional databases.",
+    longDescription: "ApexFled is a full-featured digital storefront optimized for speed, reliability, and security. Utilizing Next.js Server Components, it fetches catalogue configurations dynamically with low server response times. The platform supports secure user profiles, Stripe checkout transactions, and PostgreSQL schemas with real-time stock sync.",
+    challenges: [
+      "Implementing optimistic state updates for immediate cart interactions.",
+      "Restructuring database queries to prevent deadlock situations during flash sales.",
+      "Optimizing image rendering configurations to achieve maximum Lighthouse performance metrics."
+    ],
+    results: [
+      "Achieved sub-1.2s page load speed, scoring a 98/100 on mobile performance checks.",
+      "Designed secure database triggers in PostgreSQL mapping inventory locks on transaction starts.",
+      "Built a custom dashboard tracking revenue summaries and transactional logs."
+    ],
     tech: ["Next.js", "TypeScript", "Tailwind CSS", "Supabase", "PostgreSQL", "REST APIs"],
     link: "https://github.com/SithikaWeerasinghe/digital-account-store",
     emoji: "🛍️",
-    gradient: "from-lavender-soft to-lavender-mid/30",
+    gradient: "from-blue-500/20 to-indigo-500/20 border-blue-500/30",
   },
   {
     id: "04",
@@ -55,237 +93,255 @@ const projects: Project[] = [
     category: "Mobile Systems",
     tagline: "Interactive Puzzle Game (2026)",
     description: "Custom mobile word search game built using Google's Dart system and Material 3 design directives for fluid rendering.",
+    longDescription: "WordSearch is an elegant, responsive mobile puzzle game built in Flutter. Adhering strictly to Material 3 guidelines, the interface automatically shifts colors to harmonize with themes. It features a custom grid-drawing canvas that maps touch vectors to letter paths, complete with smooth particle animations.",
+    challenges: [
+      "Calculating touch coordinate intersections on irregular screen aspect ratios.",
+      "Building an offline dictionary index that validates 10,000+ words within milliseconds.",
+      "Designing responsive layouts that scale gracefully from compact phones to tablets."
+    ],
+    results: [
+      "Developed a custom-gesture grid tracking letter-swipes at 60fps.",
+      "Created dynamic theme support shifting color variables in real-time.",
+      "Packaged and verified target compilations on Android platforms."
+    ],
     tech: ["Flutter", "Dart", "Material 3", "Android SDK", "Git"],
     link: "https://github.com/BinethmaJayawickrama/word_search_app",
     emoji: "🧩",
-    gradient: "from-mint-soft to-mint-mid/20",
+    gradient: "from-purple-500/20 to-pink-500/20 border-purple-500/30",
   },
   {
     id: "05",
-    title: "Vision Brightness Sync",
+    title: "Vision Sync",
     category: "AI & Computer Vision",
     tagline: "AI Gesture Brightness Controller (2026)",
     description: "Computer vision mapping utilities converting hand geometry coordinates into active Windows system adjustments in real time.",
+    longDescription: "Vision Brightness Sync is a hands-free computer control utility. Running a lightweight background camera capture loop, it maps hand gesture geometry vectors from MediaPipe's hand-tracker to control Windows system brightness, allowing contactless system management.",
+    challenges: [
+      "Reducing camera feed processing overhead to prevent high CPU usage states.",
+      "Mitigating brightness jitter by implementing moving average filters on coordinate vectors.",
+      "Ensuring gesture recognition remains accurate in dim-light conditions."
+    ],
+    results: [
+      "Reduced CPU overhead to less than 4% on modern hardware.",
+      "Created smooth brightness steps using double exponential smoothing filters.",
+      "Developed a system tray menu for easy startup configuration."
+    ],
     tech: ["Python 3.12", "MediaPipe", "OpenCV", "NumPy", "screen-brightness-control"],
     link: "https://github.com/BinethmaJayawickrama/vision-brightness-sync",
     emoji: "👁️",
-    gradient: "from-cream to-sand/40",
+    gradient: "from-teal-500/20 to-cyan-500/20 border-teal-500/30",
   },
 ];
 
 export default function Projects() {
-  const scrollSectionRef = useRef<HTMLDivElement>(null);
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   useEffect(() => {
-    const gsap = (window as any).gsap;
-    const ScrollTrigger = (window as any).ScrollTrigger;
-
-    // Apply horizontal pinning only on desktop devices
-    if (
-      gsap &&
-      ScrollTrigger &&
-      window.matchMedia("(min-width: 1024px)").matches
-    ) {
-      gsap.registerPlugin(ScrollTrigger);
-
-      const scrollContainer = scrollContainerRef.current;
-      const scrollSection = scrollSectionRef.current;
-
-      if (scrollContainer && scrollSection) {
-        const totalScrollWidth = scrollContainer.scrollWidth - window.innerWidth;
-
-        // Main horizontal scroll timeline
-        const pinAnim = gsap.to(scrollContainer, {
-          x: -totalScrollWidth - 64, // offset padding
-          ease: "none",
-          scrollTrigger: {
-            trigger: scrollSection,
-            pin: true,
-            scrub: 0.5,
-            start: "top top",
-            end: () => `+=${scrollContainer.scrollWidth}`,
-            invalidateOnRefresh: true,
-            onUpdate: (self: any) => {
-              const progress = self.progress;
-
-              // 1. Update left fixed scroll progress bar
-              const progressBar = document.querySelector(".projects-progress-fill") as HTMLElement;
-              if (progressBar) {
-                progressBar.style.height = `${progress * 100}%`;
-              }
-
-              // 2. Update fixed index counter value
-              const activeIndex = Math.min(4, Math.floor(progress * 5.05));
-              const counterVal = document.querySelector(".projects-counter-val") as HTMLElement;
-              if (counterVal) {
-                counterVal.innerText = `0${activeIndex + 1} / 05`;
-              }
-            },
-          },
-        });
-
-        // 3. Staggered card fade and slide-up entrance
-        gsap.fromTo(
-          ".project-card-item",
-          { y: 60, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.8,
-            stagger: 0.1,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: scrollSection,
-              start: "top 70%",
-            },
-          }
-        );
-
-        return () => {
-          pinAnim.scrollTrigger?.kill();
-        };
+    // Reveal project list items
+    gsap.fromTo(
+      ".project-row-item",
+      { opacity: 0, y: 30 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.7,
+        stagger: 0.1,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: ".projects-trigger",
+          start: "top 80%",
+        },
       }
-    }
+    );
   }, []);
 
   return (
-    <div
-      ref={scrollSectionRef}
-      id="projects"
-      className="relative lg:h-[220vh] bg-cream projects-reel-trigger border-t border-rose-deep/5"
-    >
-      {/* Sticky wrapper for horizontal scrolling view */}
-      <div className="lg:sticky lg:top-0 lg:h-screen lg:w-screen lg:overflow-hidden flex flex-col justify-center py-20 lg:py-0">
+    <section id="projects" className="py-8 bg-transparent text-[var(--dark)] select-none">
+      <div className="w-full space-y-12 projects-trigger">
         
-        {/* Top Header Row */}
-        <div className="container mx-auto px-6 max-w-6xl mb-8 sm:mb-12">
-          <div className="flex items-end justify-between gap-4">
-            <div className="space-y-3">
-              <span className="text-2xs font-sans font-extrabold tracking-widest text-rose-deep uppercase">Portfolio Index</span>
-              <h2 className="font-display font-light italic text-4xl sm:text-5xl text-rose-dark leading-tight select-none">
-                Featured Projects
-              </h2>
-            </div>
-            
-            {/* Scroll/Drag Hint (top right) */}
-            <div className="hidden lg:flex items-center gap-2.5 text-2xs font-sans font-extrabold text-slate-400 tracking-widest uppercase select-none animate-float">
-              <span>Scroll to scan</span>
-              <span className="animate-pulse">→</span>
-            </div>
-          </div>
+        {/* Typographic Heading */}
+        <div className="flex flex-col items-start gap-1">
+          <h2 className="font-display font-black text-5xl sm:text-6xl md:text-[5.4rem] tracking-tight leading-[0.95] uppercase">
+            RECENT
+          </h2>
+          <h2 className="font-display font-black text-5xl sm:text-6xl md:text-[5.4rem] tracking-tight leading-[0.95] uppercase text-transparent" style={{ WebkitTextStroke: "1.5px var(--dark)" }}>
+            PROJECTS
+          </h2>
         </div>
 
-        {/* Outer view track: horizontal in desktop, vertical stack in mobile */}
-        <div className="overflow-x-auto lg:overflow-x-hidden no-scrollbar px-6 lg:px-0">
-          <div className="flex flex-col lg:flex-row items-stretch lg:items-center gap-8 lg:px-24 w-full lg:w-max pb-6">
-            
-            {/* Left Fixed Panel (rendered in horizontal row but behaves as sticky visual marker) */}
-            <div className="hidden lg:flex flex-col items-center justify-between h-[450px] w-36 shrink-0 border-r border-rose-deep/10 pr-12 select-none">
-              <div className="text-left w-full">
-                <span className="font-display text-5xl font-light italic text-rose-soft">02</span>
-                <p className="text-[10px] font-sans font-extrabold tracking-widest text-slate-400 uppercase mt-2">Projects</p>
-              </div>
+        {/* Vertical List of Rows */}
+        <div className="flex flex-col w-full border-t border-[var(--border)] mt-8">
+          {projects.map((project) => (
+            <div
+              key={project.id}
+              onClick={() => setSelectedProject(project)}
+              className="project-row-item py-6 border-b border-[var(--border)] flex items-center justify-between gap-6 cursor-pointer group hover:bg-[var(--surface)]/20 transition-all duration-300 px-2 sm:px-4"
+              data-cursor="card"
+            >
+              <div className="flex items-center gap-5 sm:gap-6 flex-1 min-w-0">
+                {/* Horizontal thumbnail image box */}
+                <div className={`w-[90px] h-[95px] sm:w-[130px] sm:h-[135px] rounded-[18px] shrink-0 bg-gradient-to-br ${project.gradient} border flex items-center justify-center relative overflow-hidden group-hover:scale-[1.03] transition-transform duration-500`}>
+                  <span className="text-3xl sm:text-5xl group-hover:rotate-6 transition-transform duration-500">
+                    {project.emoji}
+                  </span>
+                  
+                  {/* Glass highlight glare */}
+                  <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                </div>
 
-              {/* Progress counter and vertical bar */}
-              <div className="flex flex-col items-center">
-                <span className="projects-counter-val font-display text-lg font-light italic text-rose-dark">
-                  01 / 05
-                </span>
-                <div className="w-[1.5px] h-28 bg-rose-deep/10 my-4 relative rounded-full overflow-hidden">
-                  <div className="projects-progress-fill absolute top-0 left-0 w-full bg-rose-deep h-0 transition-all duration-100 ease-out" />
+                {/* Project Details */}
+                <div className="flex-1 min-w-0 text-left space-y-1 sm:space-y-2">
+                  <span className="text-[9px] font-sans font-extrabold tracking-widest text-[var(--muted)] uppercase">
+                    {project.category}
+                  </span>
+                  <h3 className="font-display font-semibold text-lg sm:text-2xl italic text-[var(--dark)] leading-tight group-hover:text-[var(--accent)] transition-colors">
+                    {project.title}
+                  </h3>
+                  <p className="text-xs sm:text-[13px] font-sans font-light text-[var(--muted)] dark:text-[var(--muted-light)] leading-relaxed line-clamp-2">
+                    {project.description}
+                  </p>
                 </div>
               </div>
+
+              {/* Arrow Up Right Button */}
+              <div className="w-10 h-10 rounded-full border border-[var(--border)] flex items-center justify-center text-[var(--muted)] group-hover:text-[var(--accent)] group-hover:border-[var(--accent)] group-hover:rotate-45 transition-all duration-300 shrink-0">
+                <ArrowUpRight className="w-4.5 h-4.5" />
+              </div>
+
             </div>
+          ))}
+        </div>
 
-            {/* Cards collection wrapper */}
-            <div
-              ref={scrollContainerRef}
-              className="flex flex-col lg:flex-row gap-8 lg:px-12 w-full lg:w-auto"
+      </div>
+
+      {/* Case Study sliding panel */}
+      <AnimatePresence>
+        {selectedProject && (
+          <div className="fixed inset-0 z-50 flex items-center justify-end">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setSelectedProject(null)}
+              className="absolute inset-0 bg-[var(--bg)]/80 dark:bg-[#0c0e12]/80 backdrop-blur-md"
+            />
+
+            <motion.div
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", damping: 26, stiffness: 220 }}
+              className="relative w-full max-w-xl h-full bg-[var(--bg)] border-l border-[var(--border)] p-8 sm:p-12 overflow-y-auto shadow-2xl z-10 flex flex-col justify-between"
             >
-              {projects.map((project) => (
-                <div
-                  key={project.id}
-                  data-tilt
-                  data-tilt-max="12"
-                  data-tilt-perspective="1000"
-                  data-tilt-glare="true"
-                  data-tilt-max-glare="0.15"
-                  className="project-card-item w-full sm:w-[380px] lg:w-[420px] aspect-[4/5] relative rounded-[32px] bg-white border border-rose-deep/10 p-8 flex flex-col justify-between overflow-hidden shadow-3xs hover:shadow-2xs transition-shadow duration-300 pointer-events-auto select-none cursor-default group"
-                  data-cursor="card"
-                >
-                  {/* Gloss glare overlay (handled by vanilla-tilt dynamically, but styled here) */}
-                  <div className="absolute inset-0 pointer-events-none z-10" />
+              <button
+                onClick={() => setSelectedProject(null)}
+                className="absolute top-6 right-6 p-2 rounded-full border border-[var(--border)] hover:bg-[var(--surface)] text-[var(--muted)] hover:text-[var(--dark)] transition-colors cursor-pointer"
+                aria-label="Close Case Study"
+                data-hover="true"
+              >
+                <X className="w-5 h-5" />
+              </button>
 
-                  {/* 20rem Giant Background Number */}
-                  <div className="absolute right-4 top-2 font-display text-[16rem] sm:text-[18rem] font-light italic text-rose-deep/5 pointer-events-none select-none z-0 group-hover:-translate-y-2 transition-transform duration-500">
-                    {project.id}
+              <div className="space-y-8 mt-6">
+                <div className="flex items-center gap-4">
+                  <div className={`w-20 h-20 rounded-2xl bg-gradient-to-br ${selectedProject.gradient} flex items-center justify-center text-5xl shadow-inner border select-none`}>
+                    {selectedProject.emoji}
                   </div>
-
-                  {/* Top info and link */}
-                  <div className="flex justify-between items-start z-10">
-                    <div className="flex items-center gap-2">
-                      <div className="w-16 h-16 rounded-2xl bg-white border border-rose-deep/10 flex items-center justify-center text-4xl shadow-3xs group-hover:scale-105 transition-transform animate-float">
-                        {project.emoji}
-                      </div>
-                      <div>
-                        <span className="text-[10px] font-sans font-extrabold tracking-widest text-slate-400 uppercase">
-                          {project.category}
-                        </span>
-                      </div>
-                    </div>
-
-                    {project.link ? (
-                      <a
-                        href={project.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="p-3 rounded-full border border-rose-deep/10 hover:bg-rose-soft/40 text-rose-dark transition-all duration-300 z-20 cursor-pointer"
-                        title="GitHub Repository"
-                        aria-label="GitHub Repository"
-                      >
-                        <Github className="w-4 h-4" />
-                      </a>
-                    ) : (
-                      <span className="p-3 rounded-full border border-rose-deep/5 text-slate-300 z-20 select-none">
-                        <Github className="w-4 h-4" />
-                      </span>
-                    )}
-                  </div>
-
-                  {/* Title & Tagline details */}
-                  <div className="mt-8 z-10 text-left">
-                    <span className="text-[9px] font-sans font-extrabold tracking-wider text-rose-deep uppercase mb-1.5 block">
-                      {project.tagline}
+                  <div>
+                    <span className="text-[10px] font-sans font-extrabold tracking-widest text-[var(--accent)] uppercase">
+                      {selectedProject.category}
                     </span>
-                    <h3 className="font-display text-2xl font-light text-slate-800 italic leading-snug">
-                      {project.title}
-                    </h3>
-                    <p className="text-slate-500 text-xs font-light mt-3 leading-relaxed">
-                      {project.description}
-                    </p>
+                    <h4 className="font-display text-3xl font-light text-[var(--dark)] italic leading-tight">
+                      {selectedProject.title}
+                    </h4>
                   </div>
+                </div>
 
-                  {/* Tech stack badging */}
-                  <div className="flex flex-wrap gap-1.5 pt-6 border-t border-rose-deep/5 z-10">
-                    {project.tech.map((t) => (
+                <p className="text-[var(--accent)] font-sans text-xs font-semibold tracking-wide border-b border-[var(--border)] pb-4">
+                  {selectedProject.tagline}
+                </p>
+
+                <div className="space-y-4">
+                  <h5 className="text-[9px] font-sans font-extrabold tracking-widest uppercase text-[var(--muted)]">
+                    Overview
+                  </h5>
+                  <p className="text-[var(--muted)] dark:text-[var(--muted-light)] text-sm font-light leading-relaxed">
+                    {selectedProject.longDescription}
+                  </p>
+                </div>
+
+                <div className="space-y-3">
+                  <h5 className="text-[9px] font-sans font-extrabold tracking-widest uppercase text-[var(--muted)]">
+                    Engineering Challenges
+                  </h5>
+                  <ul className="space-y-2.5">
+                    {selectedProject.challenges.map((challenge, idx) => (
+                      <li key={idx} className="flex gap-2.5 text-xs text-[var(--muted)] dark:text-[var(--muted-light)] font-light">
+                        <Code className="w-4 h-4 text-[var(--accent)] shrink-0 mt-0.5" />
+                        <span>{challenge}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="space-y-3">
+                  <h5 className="text-[9px] font-sans font-extrabold tracking-widest uppercase text-[var(--muted)]">
+                    Key Deliverables & Results
+                  </h5>
+                  <ul className="space-y-2.5">
+                    {selectedProject.results.map((result, idx) => (
+                      <li key={idx} className="flex gap-2.5 text-xs text-[var(--muted)] dark:text-[var(--muted-light)] font-light">
+                        <CheckCircle className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                        <span>{result}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="space-y-3">
+                  <h5 className="text-[9px] font-sans font-extrabold tracking-widest uppercase text-[var(--muted)]">
+                    Technology Stack
+                  </h5>
+                  <div className="flex flex-wrap gap-2">
+                    {selectedProject.tech.map((t) => (
                       <span
                         key={t}
-                        className="px-2.5 py-0.5 text-[8.5px] font-extrabold rounded-full bg-rose-soft/30 border border-rose-deep/5 text-rose-dark uppercase hover:bg-rose-soft/60 transition-colors"
+                        className="px-3 py-1 text-[9px] font-extrabold rounded-full bg-[var(--surface)] border border-[var(--border)] text-[var(--dark)] uppercase"
                       >
                         {t}
                       </span>
                     ))}
                   </div>
-
                 </div>
-              ))}
-            </div>
+              </div>
 
+              <div className="border-t border-[var(--border)] pt-6 mt-12 flex justify-between items-center">
+                <div className="flex items-center gap-2 text-[10px] font-sans font-extrabold text-[var(--muted)] tracking-wider uppercase select-none">
+                  <Calendar className="w-4 h-4" />
+                  <span>Case Study 2026</span>
+                </div>
+
+                {selectedProject.link ? (
+                  <a
+                    href={selectedProject.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-6 py-3 rounded-full bg-[var(--dark)] hover:bg-[var(--accent)] text-[var(--bg)] text-xs font-semibold flex items-center gap-2 group hover:scale-[1.03] active:scale-[0.97] transition-all duration-300"
+                    data-hover="true"
+                  >
+                    <span>View Repository</span>
+                    <ExternalLink className="w-3.5 h-3.5" />
+                  </a>
+                ) : (
+                  <span className="px-6 py-3 rounded-full bg-[var(--surface)] border border-[var(--border)] text-[var(--muted)] text-xs font-medium cursor-not-allowed select-none">
+                    Private Repository
+                  </span>
+                )}
+              </div>
+            </motion.div>
           </div>
-        </div>
-
-      </div>
-    </div>
+        )}
+      </AnimatePresence>
+    </section>
   );
 }

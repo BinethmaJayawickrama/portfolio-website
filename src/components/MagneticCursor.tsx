@@ -1,27 +1,28 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 
 export default function MagneticCursor() {
   const [isVisible, setIsVisible] = useState(false);
-  const [cursorType, setCursorType] = useState<"default" | "hover" | "text" | "card" | "image">("default");
-  const [isOverDark, setIsOverDark] = useState(false);
-  
+  const [cursorType, setCursorType] = useState<"default" | "hover" | "text" | "card" | "image" | "link">("default");
+  const [coords, setCoords] = useState({ x: 0, y: 0 });
+
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
-  
-  // Spring configuration for smooth lag (lerp feel but high responsiveness)
-  const springConfig = { damping: 40, stiffness: 350, mass: 0.4 };
+
+  // Precision springs for responsive trail following
+  const springConfig = { damping: 32, stiffness: 450, mass: 0.3 };
   const trailX = useSpring(cursorX, springConfig);
   const trailY = useSpring(cursorY, springConfig);
 
   useEffect(() => {
-    // Disable on devices that do not support hover or screens < 768px
     const handleResize = () => {
       if (window.innerWidth < 768 || !window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
         setIsVisible(false);
         document.body.classList.remove("custom-cursor-active");
+      } else {
+        document.body.classList.add("custom-cursor-active");
       }
     };
 
@@ -35,34 +36,32 @@ export default function MagneticCursor() {
     const moveCursor = (e: MouseEvent) => {
       cursorX.set(e.clientX);
       cursorY.set(e.clientY);
+      setCoords({ x: e.clientX, y: e.clientY });
       if (!isVisible) setIsVisible(true);
 
-      // Detect background theme (dark vs light sections)
       const element = document.elementFromPoint(e.clientX, e.clientY) as HTMLElement;
       if (element) {
-        const isDark = !!element.closest("#contact") || 
-                       !!element.closest("#footer") || 
-                       !!element.closest(".bg-charcoal") || 
-                       !!element.closest(".bg-charcoal-mid");
-        setIsOverDark(isDark);
-
-        // Check hover target classification
         const isProjectCard = element.closest(".project-card-item") || element.closest("[data-cursor='card']");
         const isMedia = element.tagName === "IMG" || element.closest("[data-cursor='image']");
-        const isHoverable = element.closest("a") || 
-                            element.closest("button") || 
-                            element.closest('[role="button"]') || 
-                            element.closest('[data-hover="true"]') ||
-                            element.tagName === "INPUT" || 
-                            element.tagName === "SELECT";
-        
-        const isText = ["P", "SPAN", "H1", "H2", "H3", "H4", "H5", "H6", "LI", "TEXTAREA"].includes(element.tagName) && 
-                       !element.closest("a") && 
-                       !element.closest("button") && 
-                       !element.closest('[role="button"]');
+        const isAnchor = element.closest("a") || element.closest('[data-cursor="link"]');
+        const isHoverable =
+          element.closest("button") ||
+          element.closest('[role="button"]') ||
+          element.closest('[data-hover="true"]') ||
+          element.tagName === "INPUT" ||
+          element.tagName === "SELECT" ||
+          element.tagName === "TEXTAREA";
+
+        const isText =
+          ["P", "SPAN", "H1", "H2", "H3", "H4", "H5", "H6", "LI"].includes(element.tagName) &&
+          !element.closest("a") &&
+          !element.closest("button") &&
+          !element.closest('[role="button"]');
 
         if (isProjectCard) {
           setCursorType("card");
+        } else if (isAnchor) {
+          setCursorType("link");
         } else if (isHoverable) {
           setCursorType("hover");
         } else if (isMedia) {
@@ -85,11 +84,13 @@ export default function MagneticCursor() {
     // --- MAGNETIC BUTTONS PHYSICS ---
     let magneticElements: HTMLElement[] = [];
     const bindMagneticEvents = () => {
-      const elements = document.querySelectorAll<HTMLElement>('[data-magnetic="true"], .magnetic-btn, nav button, footer a');
+      const elements = document.querySelectorAll<HTMLElement>(
+        '[data-magnetic="true"], .magnetic-btn, nav button, footer a, footer button'
+      );
       magneticElements = Array.from(elements);
 
       magneticElements.forEach((el) => {
-        const speed = parseFloat(el.getAttribute("data-magnetic-speed") || "0.2"); // magnetic scale: 6px pull
+        const speed = parseFloat(el.getAttribute("data-magnetic-speed") || "0.24");
 
         const onMouseMove = (e: MouseEvent) => {
           const rect = el.getBoundingClientRect();
@@ -98,8 +99,7 @@ export default function MagneticCursor() {
           const distanceX = e.clientX - centerX;
           const distanceY = e.clientY - centerY;
 
-          // Pull the element towards the cursor by a max of 6px
-          const clampVal = 6;
+          const clampVal = 9;
           const pullX = Math.max(-clampVal, Math.min(clampVal, distanceX * speed));
           const pullY = Math.max(-clampVal, Math.min(clampVal, distanceY * speed));
 
@@ -137,7 +137,7 @@ export default function MagneticCursor() {
       window.removeEventListener("resize", handleResize);
       document.removeEventListener("mouseleave", handleMouseLeave);
       document.removeEventListener("mouseenter", handleMouseEnter);
-      
+
       magneticElements.forEach((el) => {
         if ((el as any)._magneticMove) el.removeEventListener("mousemove", (el as any)._magneticMove);
         if ((el as any)._magneticLeave) el.removeEventListener("mouseleave", (el as any)._magneticLeave);
@@ -153,17 +153,11 @@ export default function MagneticCursor() {
 
   if (!mounted || !isVisible) return null;
 
-  // Compute color values based on state & dark/light background
-  const dotColor = isOverDark ? "bg-white" : "bg-rose-deep";
-  const ringColor = isOverDark ? "rgba(255, 255, 255, 0.7)" : "var(--color-rose-deep)";
-  const textColor = isOverDark ? "text-charcoal" : "text-rose-dark";
-  const textBgColor = isOverDark ? "bg-white/90" : "bg-rose-soft/20";
-
   return (
     <>
-      {/* Inner Dot (follows coordinates instantly) */}
+      {/* Inner Dot: precise pointer. Color-inverts via mix-blend. */}
       <motion.div
-        className={`fixed top-0 left-0 rounded-full pointer-events-none z-[9999] hidden md:flex items-center justify-center ${dotColor} ${isOverDark ? "mix-blend-difference" : ""}`}
+        className="fixed top-0 left-0 rounded-full pointer-events-none z-[9999] hidden md:block bg-white mix-blend-difference"
         style={{
           x: cursorX,
           y: cursorY,
@@ -171,41 +165,71 @@ export default function MagneticCursor() {
           translateY: "-50%",
         }}
         animate={{
-          width: cursorType === "text" ? 1.5 : cursorType === "hover" ? 0 : 6,
-          height: cursorType === "text" ? 14 : cursorType === "hover" ? 0 : 6,
+          width: cursorType === "text" ? 2 : cursorType === "hover" ? 0 : 8,
+          height: cursorType === "text" ? 16 : cursorType === "hover" ? 0 : 8,
           borderRadius: cursorType === "text" ? "1px" : "9999px",
           opacity: cursorType === "hover" ? 0 : 1,
         }}
-        transition={{ duration: 0.15 }}
+        transition={{ duration: 0.12 }}
       />
 
-      {/* Outer Ring (spring lag physics) */}
+      {/* Outer Ring: spring trail. Color-inverts. Includes Coordinate Telemetry & custom glyphs. */}
       <motion.div
-        className={`fixed top-0 left-0 pointer-events-none z-[9998] hidden md:flex items-center justify-center border ${isOverDark ? "mix-blend-difference" : ""}`}
+        className="fixed top-0 left-0 pointer-events-none z-[9998] hidden md:flex items-center justify-center border border-white mix-blend-difference bg-white/5"
         style={{
           x: trailX,
           y: trailY,
           translateX: "-50%",
           translateY: "-50%",
-          borderColor: ringColor,
-          borderWidth: cursorType === "text" ? "1.5px" : "1.5px",
         }}
         animate={{
-          width: cursorType === "hover" ? 64 : cursorType === "text" ? 16 : cursorType === "card" ? 60 : cursorType === "image" ? 40 : 40,
-          height: cursorType === "hover" ? 64 : cursorType === "text" ? 16 : cursorType === "card" ? 60 : cursorType === "image" ? 40 : 40,
-          borderRadius: cursorType === "card" ? "12px" : "9999px",
-          backgroundColor: cursorType === "hover" ? "rgba(249, 228, 236, 0.2)" : "rgba(249, 228, 236, 0.0)",
+          width:
+            cursorType === "hover"
+              ? 64
+              : cursorType === "text"
+              ? 16
+              : cursorType === "card"
+              ? 80
+              : cursorType === "image"
+              ? 48
+              : cursorType === "link"
+              ? 54
+              : 44,
+          height:
+            cursorType === "hover"
+              ? 64
+              : cursorType === "text"
+              ? 16
+              : cursorType === "card"
+              ? 80
+              : cursorType === "image"
+              ? 48
+              : cursorType === "link"
+              ? 54
+              : 44,
+          borderRadius: cursorType === "card" ? "14px" : "9999px",
+          backgroundColor: cursorType === "hover" ? "rgba(255, 255, 255, 0.15)" : "rgba(255, 255, 255, 0.03)",
         }}
-        transition={{ type: "spring", stiffness: 420, damping: 30 }}
+        transition={{ type: "spring", stiffness: 450, damping: 26 }}
       >
-        {cursorType === "card" && (
-          <span className={`text-[9px] font-sans font-extrabold uppercase tracking-widest ${textColor} select-none`}>
-            View
+        {/* Float Coordinates Telemetry for CAD structural look */}
+        {cursorType === "default" && (
+          <span className="absolute left-6 top-6 text-[7px] font-mono text-white/50 select-none pointer-events-none tracking-widest uppercase">
+            X:{coords.x} Y:{coords.y}
           </span>
         )}
-        {cursorType === "image" && (
-          <span className={`text-[12px] font-light ${textColor} select-none`}>
-            +
+
+        {/* Diagonal Arrow Glyph for Outbound Links */}
+        {cursorType === "link" && (
+          <span className="text-[12px] font-sans font-semibold text-white select-none leading-none">
+            ↗
+          </span>
+        )}
+
+        {/* View card indicator */}
+        {cursorType === "card" && (
+          <span className="text-[8px] font-sans font-extrabold uppercase tracking-widest text-white select-none">
+            View →
           </span>
         )}
       </motion.div>

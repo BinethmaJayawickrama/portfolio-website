@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { ArrowUpRight, Calendar, Clock } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Calendar, Clock, ArrowRight } from "lucide-react";
+import { gsap } from "gsap";
 
 interface Post {
   id: number;
@@ -11,11 +12,9 @@ interface Post {
   excerpt: string;
   date: string;
   readTime: string;
-  gradient: string;
-  emoji: string;
 }
 
-const articles: Post[] = [
+const articlesData: Post[] = [
   {
     id: 1,
     category: "Web Dev",
@@ -23,8 +22,6 @@ const articles: Post[] = [
     excerpt: "Exploring the trade-offs between the Pages Router and App Router, and why server components changed how I think about data fetching.",
     date: "May 2026",
     readTime: "5 min read",
-    gradient: "from-rose-lightest to-rose-soft",
-    emoji: "🚀",
   },
   {
     id: 2,
@@ -33,8 +30,6 @@ const articles: Post[] = [
     excerpt: "From face detection pipelines to WebSocket streaming — the real challenges behind building a real-time AI retail experience.",
     date: "April 2026",
     readTime: "8 min read",
-    gradient: "from-lavender-soft to-lavender-mid/40",
-    emoji: "🤖",
   },
   {
     id: 3,
@@ -43,8 +38,6 @@ const articles: Post[] = [
     excerpt: "What happens when software meets agriculture. Building wearable IoT sensors for cattle heat detection and what the data actually looks like.",
     date: "March 2026",
     readTime: "6 min read",
-    gradient: "from-mint-soft to-mint-mid/20",
-    emoji: "🐄",
   },
 ];
 
@@ -52,42 +45,22 @@ export default function Blog() {
   const [clickedPostId, setClickedPostId] = useState<number | null>(null);
 
   useEffect(() => {
-    const gsap = (window as any).gsap;
-    const ScrollTrigger = (window as any).ScrollTrigger;
-
-    if (gsap && ScrollTrigger) {
-      // 1. Heading Mask Reveal
-      gsap.fromTo(
-        ".blog-reveal-line span",
-        { y: "100%" },
-        {
-          y: 0,
-          duration: 0.9,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: ".blog-heading-trigger",
-            start: "top 80%",
-          },
-        }
-      );
-
-      // 2. Staggered Card Entrance
-      gsap.fromTo(
-        ".blog-card-item",
-        { y: 50, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.8,
-          stagger: 0.1,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: ".blog-cards-trigger",
-            start: "top 80%",
-          },
-        }
-      );
-    }
+    // Reveal blog rows
+    gsap.fromTo(
+      ".blog-row-item",
+      { opacity: 0, y: 30 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.7,
+        stagger: 0.1,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: ".blog-section-trigger",
+          start: "top 80%",
+        },
+      }
+    );
   }, []);
 
   const handleCardClick = (id: number) => {
@@ -100,34 +73,28 @@ export default function Blog() {
   return (
     <section
       id="blog"
-      className="py-20 relative overflow-hidden bg-lavender-soft text-slate-800 border-t border-rose-deep/5"
+      className="py-8 bg-transparent text-[var(--dark)] select-none"
     >
-      {/* Background visual lighting blobs */}
-      <div className="absolute top-1/3 right-0 w-72 h-72 bg-rose-soft/25 rounded-full filter blur-[100px] pointer-events-none" />
-      <div className="absolute bottom-1/3 left-0 w-80 h-80 bg-mint-soft/30 rounded-full filter blur-[110px] pointer-events-none" />
-
-      <div className="container mx-auto px-6 max-w-6xl z-10 relative">
-        {/* Header */}
-        <div className="blog-heading-trigger text-center mb-16 space-y-4">
-          <span className="text-2xs font-sans font-extrabold tracking-widest text-rose-deep uppercase">Technical Writing</span>
-          <div className="overflow-hidden blog-reveal-line h-12 sm:h-14 flex justify-center">
-            <span className="font-display font-light italic text-4xl sm:text-5xl text-rose-dark leading-none block select-none">
-              From the Blog
-            </span>
-          </div>
-          <p className="text-slate-505 max-w-md mx-auto text-xs sm:text-sm font-light">
-            Thoughts on tech, building, and the creative process.
-          </p>
+      <div className="w-full space-y-12 blog-section-trigger">
+        
+        {/* Section Heading */}
+        <div className="flex flex-col items-start gap-1">
+          <h2 className="font-display font-black text-5xl sm:text-6xl md:text-[5.4rem] tracking-tight leading-[0.95] uppercase">
+            MY
+          </h2>
+          <h2 className="font-display font-black text-5xl sm:text-6xl md:text-[5.4rem] tracking-tight leading-[0.95] uppercase text-transparent" style={{ WebkitTextStroke: "1.5px var(--dark)" }}>
+            BLOGS
+          </h2>
         </div>
 
-        {/* Cards Grid */}
-        <div className="blog-cards-trigger grid grid-cols-1 md:grid-cols-3 gap-8">
-          {articles.map((post) => (
+        {/* Blogs List Rows */}
+        <div className="flex flex-col w-full border-t border-[var(--border)] mt-8">
+          {articlesData.map((post) => (
             <div
               key={post.id}
               onClick={() => handleCardClick(post.id)}
-              className="blog-card-item bg-white p-6 rounded-[28px] cursor-pointer flex flex-col justify-between group border border-rose-deep/5 shadow-3xs hover:shadow-2xs hover:-translate-y-2 transition-all duration-400 relative overflow-hidden h-[460px]"
-              data-hover="true"
+              className="blog-row-item py-6 border-b border-[var(--border)] flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-8 hover:bg-[var(--surface)]/20 transition-all duration-300 px-2 sm:px-4 group cursor-pointer relative overflow-hidden"
+              data-cursor="link"
             >
               {/* Coming Soon absolute overlay */}
               <AnimatePresence>
@@ -136,79 +103,49 @@ export default function Blog() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    className="absolute inset-0 bg-charcoal/95 z-20 flex flex-col items-center justify-center text-white"
+                    className="absolute inset-0 bg-[var(--surface)]/95 dark:bg-[#0c0e12]/95 z-20 flex flex-col items-center justify-center text-[var(--dark)]"
                   >
-                    <span className="font-display font-light italic text-xl text-rose-soft">Coming Soon</span>
-                    <span className="text-[8px] font-sans font-extrabold tracking-[0.25em] uppercase mt-2 text-slate-400">
-                      Under Construction
+                    <span className="font-display font-semibold italic text-xl text-[var(--accent)]">Coming Soon</span>
+                    <span className="text-[8px] font-sans font-extrabold tracking-[0.25em] uppercase mt-1 text-[var(--dark)]">
+                      Article Under Construction
                     </span>
                   </motion.div>
                 )}
               </AnimatePresence>
 
-              {/* Card Contents */}
-              <div>
-                {/* Visual Thumbnail Area */}
-                <div className="w-full h-[180px] rounded-2xl overflow-hidden relative mb-5">
-                  <div className={`w-full h-full bg-gradient-to-tr ${post.gradient} flex items-center justify-center group-hover:scale-105 transition-transform duration-500 overflow-hidden`}>
-                    <span className="text-5xl transform group-hover:rotate-12 transition-transform animate-float select-none">
-                      {post.emoji}
-                    </span>
-                  </div>
+              {/* Left Side: Arrow and Details */}
+              <div className="flex items-start gap-4 flex-1 min-w-0">
+                <div className="w-8 h-8 rounded-full border border-[var(--border)] flex items-center justify-center text-[var(--muted)] group-hover:text-[var(--accent)] group-hover:border-[var(--accent)] group-hover:rotate-45 transition-all duration-300 shrink-0 mt-1">
+                  <ArrowUpRight className="w-3.5 h-3.5" />
                 </div>
-
-                {/* Category Pill */}
-                <div className="flex items-center gap-1 mb-3">
-                  <span className="inline-flex px-3 py-1 rounded-full bg-rose-soft/40 border border-rose-deep/10 text-rose-dark text-[9px] font-extrabold uppercase tracking-widest transition-transform duration-300 group-hover:translate-x-1">
+                
+                <div className="flex-1 min-w-0 text-left space-y-1">
+                  <span className="text-[9px] font-sans font-extrabold tracking-widest text-[var(--muted)] uppercase leading-none">
                     {post.category}
                   </span>
+                  <h3 className="font-display font-semibold text-lg sm:text-xl italic text-[var(--dark)] leading-tight group-hover:text-[var(--accent)] transition-colors">
+                    {post.title}
+                  </h3>
+                  <p className="text-xs sm:text-[13px] font-sans font-light text-[var(--muted)] dark:text-[var(--muted-light)] leading-relaxed line-clamp-2 pt-1">
+                    {post.excerpt}
+                  </p>
                 </div>
-
-                {/* Title */}
-                <h3 className="font-display text-lg font-light text-slate-800 italic leading-snug tracking-wide group-hover:text-rose-deep transition-colors mb-2">
-                  {post.title}
-                </h3>
-
-                {/* Excerpt */}
-                <p className="text-slate-500 text-xs font-light leading-relaxed line-clamp-2">
-                  {post.excerpt}
-                </p>
               </div>
 
-              {/* Bottom Metadata row */}
-              <div className="flex items-center justify-between border-t border-rose-deep/5 pt-4 mt-4">
-                <div className="flex items-center gap-3 text-[10px] font-sans font-semibold text-slate-400 uppercase tracking-wider">
-                  <div className="flex items-center gap-1">
-                    <Calendar className="w-3.5 h-3.5 text-rose-deep" />
-                    <span>{post.date}</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <Clock className="w-3.5 h-3.5 text-rose-deep" />
-                    <span>{post.readTime}</span>
-                  </div>
+              {/* Right Side: Date & Read Time */}
+              <div className="flex md:flex-col items-center md:items-end gap-3 md:gap-1.5 shrink-0 pl-12 md:pl-0 text-[10px] font-sans font-semibold text-[var(--muted)] dark:text-[var(--muted-light)] uppercase tracking-wider">
+                <div className="flex items-center gap-1">
+                  <Calendar className="w-3.5 h-3.5 text-[var(--accent)]" />
+                  <span>{post.date}</span>
                 </div>
-
-                {/* Avatar tag */}
-                <div className="w-8 h-8 rounded-full bg-rose-soft/50 border border-rose-deep/10 flex items-center justify-center shadow-inner">
-                  <span className="font-display font-medium text-2xs text-rose-dark italic">BJ</span>
+                <div className="flex items-center gap-1">
+                  <Clock className="w-3.5 h-3.5 text-[var(--accent)]" />
+                  <span>{post.readTime}</span>
                 </div>
               </div>
 
             </div>
           ))}
-        </div>
-
-        {/* Read All posts link button */}
-        <div className="flex justify-center mt-12">
-          <button
-            onClick={() => handleCardClick(99)}
-            className="inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-widest text-rose-dark hover:text-rose-deep transition-colors group cursor-pointer"
-            data-magnetic="true"
-            data-magnetic-speed="0.2"
-          >
-            <span>Read all posts</span>
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </button>
         </div>
 
       </div>

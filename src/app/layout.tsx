@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, DM_Sans } from "next/font/google";
+import { Poppins, DM_Sans } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 
-const cormorant = Cormorant_Garamond({
-  variable: "--font-cormorant",
+const poppins = Poppins({
+  variable: "--font-poppins",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["300", "400", "500", "600", "700", "900"],
   style: ["normal", "italic"],
   display: "swap",
 });
@@ -44,35 +44,48 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${cormorant.variable} ${dmSans.variable} h-full antialiased`}
+      className={`${poppins.variable} ${dmSans.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
       <head>
-        {/* Load Core Animation & Scrolling CDNs */}
-        <Script
-          src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"
-          strategy="beforeInteractive"
+        {/* Inline script to detect and apply theme instantly (prevents flash of white) */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  let theme = 'light';
+                  const storedTheme = localStorage.getItem('theme');
+                  if (localStorage.getItem('theme_migrated_v3') !== 'true') {
+                    localStorage.setItem('theme', 'light');
+                    localStorage.setItem('theme_migrated_v3', 'true');
+                    theme = 'light';
+                  } else {
+                    theme = storedTheme || 'light';
+                  }
+                  if (theme === 'dark') {
+                    document.documentElement.classList.add('dark');
+                  } else {
+                    document.documentElement.classList.remove('dark');
+                  }
+                } catch (e) {
+                  document.documentElement.classList.remove('dark');
+                }
+              })();
+            `,
+          }}
         />
-        <Script
-          src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"
-          strategy="beforeInteractive"
-        />
-        <Script
-          src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/MotionPathPlugin.min.js"
-          strategy="beforeInteractive"
-        />
-        <Script
-          src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"
-          strategy="beforeInteractive"
-        />
+        {/* Fallback CDN for vanilla-tilt if needed by legacy files, though we will rewrite tilt in pure React */}
         <Script
           src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"
           strategy="beforeInteractive"
         />
       </head>
-      <body className="min-h-full font-sans bg-rose-bg text-slate-800 selection:bg-rose-500/20 selection:text-rose-950">
+      <body className="min-h-full font-sans bg-[var(--bg)] text-[var(--dark)] selection:bg-[var(--accent)]/20 selection:text-[var(--accent-deep)]">
+        {/* Film grain noise texture */}
+        <div className="noise-overlay" />
         {children}
       </body>
     </html>
   );
 }
-
