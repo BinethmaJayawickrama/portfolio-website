@@ -1,48 +1,26 @@
 "use client";
 
 import React from "react";
-import { Github, Linkedin, Mail, Twitter, MapPin } from "lucide-react";
+import { Github, Linkedin, Mail, Instagram } from "lucide-react";
 
 export default function ProfileCard() {
   return (
     <div
-      className="w-full bg-white border border-[rgba(0,0,0,0.06)] rounded-[28px] p-6 flex flex-col items-center gap-5 select-none"
+      className="w-full bg-white rounded-[28px] flex flex-col items-center select-none overflow-hidden"
       style={{
-        boxShadow: "0 2px 24px rgba(0,0,0,0.07), 0 0 0 1px rgba(0,0,0,0.04)",
+        boxShadow: "0 2px 24px rgba(0,0,0,0.08)",
+        border: "1px solid rgba(0,0,0,0.07)",
       }}
     >
-      {/* ── Profile Image with White Mat Frame ── */}
-      <div
-        className="w-full rounded-[18px] overflow-hidden relative transition-all duration-500 ease-out hover:shadow-xl"
-        style={{
-          padding: "20px 20px 28px 20px",
-          background: "white",
-          border: "1px solid rgba(0,0,0,0.08)",
-          boxShadow: "0 4px 24px rgba(0,0,0,0.06), 0 1px 4px rgba(0,0,0,0.04)",
-        }}
-      >
-        {/* Corner tick marks (photo-print aesthetic) */}
-        {[
-          "top-3 left-3",
-          "top-3 right-3 rotate-90",
-          "bottom-3 left-3 -rotate-90",
-          "bottom-3 right-3 rotate-180",
-        ].map((pos, i) => (
-          <div
-            key={i}
-            className={`absolute ${pos} w-3 h-3 pointer-events-none z-20`}
-            style={{
-              borderTop: "1.5px solid rgba(0,0,0,0.15)",
-              borderLeft: "1.5px solid rgba(0,0,0,0.15)",
-              borderRadius: "1px",
-            }}
-          />
-        ))}
-
-        {/* Photo inside the mat */}
+      {/* ── Image with white mat frame ── */}
+      <div className="w-full bg-white px-7 pt-7 pb-0">
         <div
-          className="w-full overflow-hidden rounded-[10px] group"
-          style={{ aspectRatio: "3/4", background: "#f0ede8" }}
+          className="w-full overflow-hidden rounded-[14px] group"
+          style={{
+            aspectRatio: "3/4",
+            border: "20px solid white",
+            outline: "1px solid rgba(0,0,0,0.09)",
+          }}
         >
           <img
             src="/profile_cropped_v7.png"
@@ -53,41 +31,46 @@ export default function ProfileCard() {
             }}
           />
         </div>
-
-        {/* Caption */}
-        <div className="pt-3 text-center">
-          <p className="text-[9px] font-mono tracking-[0.2em] uppercase text-gray-300 select-none">
-            Colombo, Sri Lanka &nbsp;·&nbsp; CS&apos;26
-          </p>
-        </div>
       </div>
 
-      {/* ── Name and Bio ── */}
-      <div className="text-center space-y-2 px-1 w-full">
-        <h2 className="font-display font-bold text-[22px] tracking-tight text-gray-900 leading-tight">
-          Binethma Jayawickrama
+      {/* ── Name & Title ── */}
+      <div className="text-center space-y-2.5 px-6 pt-5 pb-1 w-full">
+        <h2
+          className="font-display font-bold tracking-tight text-gray-900 leading-[1.1]"
+          style={{ fontSize: "clamp(26px, 5vw, 32px)" }}
+        >
+          Binethma<br />Jayawickrama
         </h2>
-        <div className="flex items-center justify-center gap-1.5 text-gray-400">
-          <MapPin className="w-3 h-3" strokeWidth={1.8} />
-          <span className="text-[11px] font-mono tracking-wide">
-            Sri Lanka · IIT / Westminster
+        <p className="text-[12px] font-mono tracking-widest uppercase text-gray-400">
+          Full-Stack Developer
+        </p>
+        <div className="flex flex-col items-center gap-1.5 pt-0.5">
+          <span className="inline-flex items-center gap-1.5 text-[11px] font-sans text-gray-500 bg-gray-50 border border-gray-200 rounded-full px-3 py-1">
+            <svg className="w-2.5 h-2.5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+            </svg>
+            Sri Lanka
+          </span>
+          <span className="inline-flex items-center gap-1.5 text-[11px] font-sans text-gray-500 bg-gray-50 border border-gray-200 rounded-full px-3 py-1">
+            <svg className="w-2.5 h-2.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 14l9-5-9-5-9 5 9 5z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+            </svg>
+            University of Westminster (IIT)
           </span>
         </div>
-        <p className="text-[12px] font-sans font-light leading-relaxed text-gray-400 pt-1">
-          CS undergraduate specializing in IoT telemetry, full-stack web dev &amp; interactive AI engineering.
-        </p>
       </div>
 
-      {/* ── Thin divider ── */}
-      <div className="w-full h-px bg-gray-100" />
+      {/* ── Divider ── */}
+      <div className="w-[calc(100%-48px)] h-px bg-gray-100 my-4" />
 
       {/* ── Social Link Dock ── */}
-      <div className="flex items-center gap-2.5 w-full justify-center">
+      <div className="flex items-center gap-2.5 w-full justify-center pb-6">
         {[
           { href: "https://github.com/ADORIX000", icon: <Github className="w-[15px] h-[15px]" />, label: "GitHub" },
           { href: "https://www.linkedin.com/in/binethma-jayawickrama", icon: <Linkedin className="w-[15px] h-[15px]" />, label: "LinkedIn" },
           { href: "mailto:binethmad@gmail.com", icon: <Mail className="w-[15px] h-[15px]" />, label: "Email" },
-          { href: "https://twitter.com/", icon: <Twitter className="w-[15px] h-[15px]" />, label: "Twitter" },
+          { href: "https://instagram.com/", icon: <Instagram className="w-[15px] h-[15px]" />, label: "Instagram" },
         ].map(({ href, icon, label }) => (
           <a
             key={label}
