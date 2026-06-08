@@ -1,87 +1,106 @@
 "use client";
 
 import React from "react";
-import { Github, Linkedin, Mail, Twitter } from "lucide-react";
-import { motion } from "framer-motion";
+import { Github, Linkedin, Mail, Twitter, MapPin } from "lucide-react";
 
 export default function ProfileCard() {
   return (
-    <div className="w-full bg-[var(--white)]/60 dark:bg-[var(--white)]/5 border border-[var(--border)] rounded-[24px] p-6 flex flex-col items-center gap-6 shadow-sm select-none">
-      
-      {/* Profile Image Frame with Gradient Mesh */}
-      <div className="w-full aspect-[4/5] rounded-[18px] relative overflow-hidden bg-gradient-to-br from-[var(--surface)] to-[var(--border)]/30 border border-[var(--border)] flex items-end justify-center group">
-        
-        {/* Soft background aura circles */}
-        <div className="absolute w-40 h-40 rounded-full bg-[var(--accent)]/10 dark:bg-[var(--accent)]/5 filter blur-[40px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 group-hover:scale-110 transition-transform duration-700" />
-        <div className="absolute w-24 h-24 rounded-full border border-dashed border-[var(--accent)]/20 animate-spin-slow top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-60" />
+    <div
+      className="w-full bg-white border border-[rgba(0,0,0,0.06)] rounded-[28px] p-6 flex flex-col items-center gap-5 select-none"
+      style={{
+        boxShadow: "0 2px 24px rgba(0,0,0,0.07), 0 0 0 1px rgba(0,0,0,0.04)",
+      }}
+    >
+      {/* ── Profile Image with White Mat Frame ── */}
+      <div
+        className="w-full rounded-[18px] overflow-hidden relative transition-all duration-500 ease-out hover:shadow-xl"
+        style={{
+          padding: "20px 20px 28px 20px",
+          background: "white",
+          border: "1px solid rgba(0,0,0,0.08)",
+          boxShadow: "0 4px 24px rgba(0,0,0,0.06), 0 1px 4px rgba(0,0,0,0.04)",
+        }}
+      >
+        {/* Corner tick marks (photo-print aesthetic) */}
+        {[
+          "top-3 left-3",
+          "top-3 right-3 rotate-90",
+          "bottom-3 left-3 -rotate-90",
+          "bottom-3 right-3 rotate-180",
+        ].map((pos, i) => (
+          <div
+            key={i}
+            className={`absolute ${pos} w-3 h-3 pointer-events-none z-20`}
+            style={{
+              borderTop: "1.5px solid rgba(0,0,0,0.15)",
+              borderLeft: "1.5px solid rgba(0,0,0,0.15)",
+              borderRadius: "1px",
+            }}
+          />
+        ))}
 
-        {/* Decorative corner lines / brackets */}
-        <div className="absolute top-3 left-3 w-3.5 h-3.5 border-t border-l border-[var(--border)]" />
-        <div className="absolute top-3 right-3 w-3.5 h-3.5 border-t border-r border-[var(--border)]" />
-        <div className="absolute bottom-3 left-3 w-3.5 h-3.5 border-b border-l border-[var(--border)]" />
-        <div className="absolute bottom-3 right-3 w-3.5 h-3.5 border-b border-r border-[var(--border)]" />
+        {/* Photo inside the mat */}
+        <div
+          className="w-full overflow-hidden rounded-[10px] group"
+          style={{ aspectRatio: "3/4", background: "#f0ede8" }}
+        >
+          <img
+            src="/profile_cropped_v7.png"
+            alt="Binethma Jayawickrama"
+            className="w-full h-full object-cover object-top pointer-events-none transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+            style={{
+              filter: "grayscale(1) contrast(1.08) brightness(0.97)",
+            }}
+          />
+        </div>
 
-        {/* Cutout Profile Image */}
-        <img
-          src="/profile_nobg.png"
-          alt="Binethma Jayawickrama"
-          className="relative z-10 w-[95%] h-[95%] object-contain object-bottom select-none pointer-events-none drop-shadow-[0_15px_30px_rgba(244,108,56,0.15)] dark:drop-shadow-[0_15px_30px_rgba(0,0,0,0.65)] group-hover:scale-[1.03] transition-transform duration-500 ease-out"
-        />
+        {/* Caption */}
+        <div className="pt-3 text-center">
+          <p className="text-[9px] font-mono tracking-[0.2em] uppercase text-gray-300 select-none">
+            Colombo, Sri Lanka &nbsp;·&nbsp; CS&apos;26
+          </p>
+        </div>
       </div>
 
-      {/* Name and Bio */}
-      <div className="text-center space-y-3 px-2">
-        <h2 className="font-display font-bold text-2xl tracking-tight text-[var(--dark)]">
+      {/* ── Name and Bio ── */}
+      <div className="text-center space-y-2 px-1 w-full">
+        <h2 className="font-display font-bold text-[22px] tracking-tight text-gray-900 leading-tight">
           Binethma Jayawickrama
         </h2>
-        
-        <p className="text-xs sm:text-[13px] font-sans font-light leading-relaxed text-[var(--muted)] dark:text-[var(--muted)]/90">
-          A Computer Science undergraduate at IIT Sri Lanka / University of Westminster. Specializing in IoT telemetry systems, full-stack web development, and interactive AI engineering.
+        <div className="flex items-center justify-center gap-1.5 text-gray-400">
+          <MapPin className="w-3 h-3" strokeWidth={1.8} />
+          <span className="text-[11px] font-mono tracking-wide">
+            Sri Lanka · IIT / Westminster
+          </span>
+        </div>
+        <p className="text-[12px] font-sans font-light leading-relaxed text-gray-400 pt-1">
+          CS undergraduate specializing in IoT telemetry, full-stack web dev &amp; interactive AI engineering.
         </p>
       </div>
 
-      {/* Social Media Link Dock */}
-      <div className="flex items-center gap-3 w-full justify-center mt-2">
-        <a
-          href="https://github.com/ADORIX000"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="w-10 h-10 rounded-xl border border-[var(--border)] flex items-center justify-center text-[var(--muted)] hover:text-[var(--accent)] hover:border-[var(--accent)] transition-all duration-300 bg-[var(--surface)]/20 hover:bg-[var(--surface)] dark:hover:bg-white/5"
-          title="GitHub"
-          data-cursor="link"
-        >
-          <Github className="w-4 h-4" />
-        </a>
-        <a
-          href="https://www.linkedin.com/in/binethma-jayawickrama"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="w-10 h-10 rounded-xl border border-[var(--border)] flex items-center justify-center text-[var(--muted)] hover:text-[var(--accent)] hover:border-[var(--accent)] transition-all duration-300 bg-[var(--surface)]/20 hover:bg-[var(--surface)] dark:hover:bg-white/5"
-          title="LinkedIn"
-          data-cursor="link"
-        >
-          <Linkedin className="w-4 h-4" />
-        </a>
-        <a
-          href="mailto:binethmad@gmail.com"
-          className="w-10 h-10 rounded-xl border border-[var(--border)] flex items-center justify-center text-[var(--muted)] hover:text-[var(--accent)] hover:border-[var(--accent)] transition-all duration-300 bg-[var(--surface)]/20 hover:bg-[var(--surface)] dark:hover:bg-white/5"
-          title="Email"
-          data-cursor="link"
-        >
-          <Mail className="w-4 h-4" />
-        </a>
-        <a
-          href="https://twitter.com/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="w-10 h-10 rounded-xl border border-[var(--border)] flex items-center justify-center text-[var(--muted)] hover:text-[var(--accent)] hover:border-[var(--accent)] transition-all duration-300 bg-[var(--surface)]/20 hover:bg-[var(--surface)] dark:hover:bg-white/5"
-          title="Twitter / X"
-          data-cursor="link"
-        >
-          <Twitter className="w-4 h-4" />
-        </a>
-      </div>
+      {/* ── Thin divider ── */}
+      <div className="w-full h-px bg-gray-100" />
 
+      {/* ── Social Link Dock ── */}
+      <div className="flex items-center gap-2.5 w-full justify-center">
+        {[
+          { href: "https://github.com/ADORIX000", icon: <Github className="w-[15px] h-[15px]" />, label: "GitHub" },
+          { href: "https://www.linkedin.com/in/binethma-jayawickrama", icon: <Linkedin className="w-[15px] h-[15px]" />, label: "LinkedIn" },
+          { href: "mailto:binethmad@gmail.com", icon: <Mail className="w-[15px] h-[15px]" />, label: "Email" },
+          { href: "https://twitter.com/", icon: <Twitter className="w-[15px] h-[15px]" />, label: "Twitter" },
+        ].map(({ href, icon, label }) => (
+          <a
+            key={label}
+            href={href}
+            target={href.startsWith("mailto") ? undefined : "_blank"}
+            rel="noopener noreferrer"
+            title={label}
+            className="w-9 h-9 rounded-xl flex items-center justify-center text-gray-400 hover:text-gray-900 transition-all duration-200 hover:bg-gray-100 border border-transparent hover:border-gray-200"
+          >
+            {icon}
+          </a>
+        ))}
+      </div>
     </div>
   );
 }

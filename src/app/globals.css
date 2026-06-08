@@ -79,6 +79,13 @@
   --muted-light: #beb7b0;
   --white: #ffffff;
 
+  /* Navbar transparency helper variables to prevent text overlay clashing */
+  --nav-bg: rgba(250, 247, 243, 0.94);
+  --nav-bg-mobile: rgba(250, 247, 243, 0.98);
+  --nav-border: rgba(230, 222, 208, 0.35);
+  --nav-border-light: rgba(230, 222, 208, 0.1);
+  --nav-border-medium: rgba(230, 222, 208, 0.3);
+
   /* Backward compatibility theme mappings */
   --rose-lightest: #faf7f3;
   --rose-soft: #f3ede4;
@@ -107,6 +114,8 @@
   --scroll-thumb: #f46c38;
   --scroll-thumb-hover: #151312;
   --grid-line-color: rgba(244, 108, 56, 0.08);
+  --profile-grad-from: #f46c38;
+  --profile-grad-to: #b03005;
 }
 
 .dark {
@@ -120,6 +129,13 @@
   --muted: #998f8f;
   --muted-light: #524c4b;
   --white: #191716;
+
+  /* Navbar transparency helper variables to prevent text overlay clashing */
+  --nav-bg: rgba(21, 19, 18, 0.94);
+  --nav-bg-mobile: rgba(21, 19, 18, 0.98);
+  --nav-border: rgba(44, 41, 40, 0.35);
+  --nav-border-light: rgba(44, 41, 40, 0.1);
+  --nav-border-medium: rgba(44, 41, 40, 0.3);
 
   /* Backward compatibility theme mappings */
   --rose-lightest: #1e1b1a;
@@ -149,6 +165,8 @@
   --scroll-thumb: #c5ff41;
   --scroll-thumb-hover: #faf7f3;
   --grid-line-color: rgba(255, 255, 255, 0.04);
+  --profile-grad-from: #c5ff41;
+  --profile-grad-to: #0f1402;
 }
 
 * {
@@ -168,25 +186,11 @@ body {
   background-image: radial-gradient(var(--bg-dots) 1.2px, transparent 1.2px);
   background-size: 32px 32px;
   color: var(--dark);
-  overflow-x: hidden;
+  overflow-x: clip;
   transition: background-color 0.4s ease, color 0.4s ease;
 }
 
-/* Hide default cursor on desktop device when custom cursor is running */
-@media (hover: hover) and (pointer: fine) {
-  body.custom-cursor-active {
-    cursor: none;
-  }
-  body.custom-cursor-active a, 
-  body.custom-cursor-active button, 
-  body.custom-cursor-active [role="button"], 
-  body.custom-cursor-active input, 
-  body.custom-cursor-active textarea, 
-  body.custom-cursor-active select,
-  body.custom-cursor-active [data-hover="true"] {
-    cursor: none;
-  }
-}
+
 
 /* Custom Editorial Scrollbar */
 ::-webkit-scrollbar {
@@ -371,3 +375,23 @@ body {
     transform: rotate(360deg);
   }
 }
+
+/* Layout spacing classes to prevent fixed navbar overlap */
+.main-layout {
+  padding-top: 90px;
+}
+@media (min-width: 1024px) {
+  .main-layout {
+    padding-top: 110px;
+  }
+}
+
+.hero-layout {
+  padding-top: 0px;
+}
+@media (min-width: 1024px) {
+  .hero-layout {
+    padding-top: 0px;
+  }
+}
+

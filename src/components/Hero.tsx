@@ -40,16 +40,16 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="relative flex flex-col justify-center pt-8 pb-12 overflow-hidden bg-transparent select-none text-[var(--dark)]"
+      className="hero-layout relative flex flex-col justify-center pb-12 overflow-hidden bg-transparent select-none text-[var(--dark)]"
     >
       <div className="w-full flex flex-col gap-10">
         
         {/* Giant Headers Info Panel */}
         <div className="flex flex-col items-start gap-4">
-          <h1 className="hero-heading-line font-display font-black text-6xl sm:text-7xl md:text-8xl xl:text-[6.8rem] tracking-tight leading-[0.9] uppercase select-none">
+          <h1 className="hero-heading-line font-display font-black text-[48px] sm:text-[64px] md:text-[80px] lg:text-[84px] xl:text-[94px] tracking-tight leading-[0.9] uppercase select-none">
             FULL STACK
           </h1>
-          <h1 className="hero-heading-line font-display font-black text-6xl sm:text-7xl md:text-8xl xl:text-[6.8rem] tracking-tight leading-[0.9] uppercase select-none text-transparent" style={{ WebkitTextStroke: "1.5px var(--dark)" }}>
+          <h1 className="hero-heading-line font-display font-black text-[48px] sm:text-[64px] md:text-[80px] lg:text-[84px] xl:text-[94px] tracking-tight leading-[0.9] uppercase select-none text-transparent" style={{ WebkitTextStroke: "1.5px var(--dark)" }}>
             DEVELOPER
           </h1>
 

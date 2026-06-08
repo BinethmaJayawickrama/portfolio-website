@@ -85,30 +85,31 @@ export default function Home() {
   };
 
   return (
-    <div className="relative min-h-screen bg-[var(--bg)] text-[var(--dark)] transition-colors duration-500 overflow-x-hidden">
+    <div className="relative min-h-screen w-full bg-[var(--bg)] text-[var(--dark)] transition-colors duration-500 overflow-x-clip">
       {/* 1. Loading Curtain Reveal Screen */}
       {!isLoaded && <LoadingScreen onComplete={() => setIsLoaded(true)} />}
 
       {isLoaded && (
-        <motion.div
-          initial={{ opacity: 0, scale: 0.99 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-          className="relative min-h-screen"
-        >
-          {/* 3. Navigation Header Bar */}
+        <>
+          {/* 3. Navigation Header Bar (Placed outside scale animation to keep fixed positioning relative to viewport) */}
           <Navbar theme={theme} toggleTheme={toggleTheme} />
 
-          {/* 4. Two-Column Structural Layout Container */}
-          <main className="max-w-[1140px] mx-auto px-6 md:px-10 lg:px-12 xl:px-0 py-28 flex flex-col lg:flex-row gap-12 lg:gap-[100px] relative z-10">
-            
-            {/* Sticky Profile Card (Left Sidebar) */}
-            <div className="w-full lg:w-[344px] lg:sticky lg:top-28 h-fit shrink-0 z-20">
-              <ProfileCard />
-            </div>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+            className="relative min-h-screen w-full flex flex-col items-center"
+          >
+            {/* 4. Two-Column Structural Layout Container (max-width and width aligned with Navbar's w-[92%] max-w-5xl) */}
+            <main className="main-layout w-[92%] max-w-5xl px-0 pb-28 flex flex-col lg:flex-row gap-12 lg:gap-10 xl:gap-16 relative z-10">
+              
+              {/* Sticky Profile Card (Left Sidebar) */}
+              <div className="w-full max-w-[320px] mx-auto lg:mx-0 lg:sticky lg:top-[120px] lg:self-start h-fit shrink-0 z-20">
+                <ProfileCard />
+              </div>
 
-            {/* Scrollable Content (Right Column) */}
-            <div className="flex-1 w-full lg:w-1 min-w-0 flex flex-col gap-24 md:gap-32 lg:gap-[120px] z-10">
+              {/* Scrollable Content (Right Column) */}
+              <div className="flex-1 w-full lg:max-w-[640px] min-w-0 flex flex-col gap-24 md:gap-32 lg:gap-[120px] z-10">
               <Hero />
               <Projects />
               <Education />
@@ -118,7 +119,8 @@ export default function Home() {
             </div>
 
           </main>
-        </motion.div>
+         </motion.div>
+        </>
       )}
     </div>
   );
