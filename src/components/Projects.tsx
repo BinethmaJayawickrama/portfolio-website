@@ -1,9 +1,47 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ArrowUpRight, X, Calendar, Code, CheckCircle, ExternalLink } from "lucide-react";
+import { createPortal } from "react-dom";
+import { ArrowUpRight, X, Calendar, Code, CheckCircle, ExternalLink, Github, Globe } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { gsap } from "gsap";
+
+const techIconMap: Record<string, string> = {
+  "Python": "python",
+  "Python 3.12": "python",
+  "React.js": "react",
+  "Next.js": "nextdotjs",
+  "TypeScript": "typescript",
+  "JavaScript": "javascript",
+  "Flutter": "flutter",
+  "Dart": "dart",
+  "Firebase": "firebase",
+  "Supabase": "supabase",
+  "PostgreSQL": "postgresql",
+  "Tailwind CSS": "tailwindcss",
+  "OpenCV": "opencv",
+  "FastAPI": "fastapi",
+  "Git": "git",
+  "Android SDK": "android",
+  "Material 3": "materialdesign",
+  "Node.js": "nodedotjs",
+  "MongoDB": "mongodb",
+  "Docker": "docker",
+  "WebSockets": "socketdotio",
+  "IoT Sensors": "esphome",
+  "Embedded Systems": "raspberrypi",
+  "Data Analytics": "apacheecharts",
+  "Machine Learning": "tensorflow",
+  "Database Management": "postgresql",
+  "Web Development": "html5",
+  "Mobile Development": "flutter",
+  "ESP32": "esphome",
+  "MediaPipe": "google",
+  "NumPy": "numpy",
+  "REST APIs": "fastapi",
+  "Stripe": "stripe",
+};
+
 
 interface Project {
   id: string;
@@ -16,8 +54,11 @@ interface Project {
   results: string[];
   tech: string[];
   link: string;
+  website?: string;
   emoji: string;
   gradient: string;
+  challengesLabel?: string;
+  resultsLabel?: string;
 }
 
 const projects: Project[] = [
@@ -28,6 +69,7 @@ const projects: Project[] = [
     tagline: "AI-Powered Conversational Sales Kiosk (2025–2026)",
     description: "An AI-powered sales kiosk that synchronizes video presence tracking with speech interfaces and interactive recommendations.",
     longDescription: "Adorix redefines interactive retail kiosks by combining edge computer vision and real-time Conversational AI. Built to operate in offline/low-latency environments, it detects customer engagement levels through facial presence tracking, welcomes them via synthesize-speech, and navigates product catalogues through structured voice dialogue. The backend synchronizes video inputs with FastAPI endpoints to serve low-latency interactions.",
+    challengesLabel: "Key Features",
     challenges: [
       "Optimizing Mediapipe landmark detection to run at 30fps on low-power kiosk hardware.",
       "Achieving sub-500ms voice-to-text response latency over WebSockets.",
@@ -40,27 +82,29 @@ const projects: Project[] = [
     ],
     tech: ["Python", "OpenCV", "FastAPI", "React.js", "Tailwind CSS", "WebSockets", "Supabase"],
     link: "https://github.com/ADORIX000",
+    website: "https://adorixit.com/",
     emoji: "🤖",
     gradient: "from-red-500/20 to-orange-500/20 border-red-500/30",
   },
   {
     id: "02",
-    title: "Smart Tail Pod",
+    title: "Smart Cattle Breeding & Heat Detection Management System",
     category: "IoT Systems",
-    tagline: "IoT Cattle Heat Detection System (2026, ongoing)",
-    description: "An smart IoT agricultural system running telemetry sweeps to flag health and cattle heat markers using hardware sensors.",
-    longDescription: "The Smart Tail Pod is an agricultural-tech wearable designed to monitor livestock health metrics in real-time. Attaching a lightweight sensor to the animal's tail, the pod sweeps temperature, movement speed, and tail position telemetry. This data is transmitted to an ESP32 edge receiver and processed to flag active heat cycles, improving breeding rates for dairy farms.",
+    tagline: "IoT-Enabled Cattle Breeding Management Platform (2026, ongoing)",
+    description: "An IoT-enabled cattle breeding management platform designed to improve reproductive efficiency in dairy and livestock farms.",
+    longDescription: "Developed an IoT-enabled cattle breeding management platform designed to improve reproductive efficiency in dairy and livestock farms. The system maintains comprehensive cattle profiles, tracks breeding and health records, monitors real-time sensor data, and assists farmers in identifying heat (estrus) periods for timely artificial insemination. The platform combines farm management features with data-driven monitoring to support better breeding decisions and herd productivity.",
+    challengesLabel: "Key Features",
+    resultsLabel: "Key Deliverables & Results",
     challenges: [
-      "Optimizing ESP32 deep-sleep modes to ensure a battery lifespan of over 6 months.",
-      "Filtering out false positive movements caused by mathematical low-pass filters.",
-      "Establishing reliable long-range radio (LoRa) connections in rural, high-interference environments."
+      "Individual cattle profile management.",
+      "Breeding and artificial insemination tracking.",
+      "Health and vaccination record management.",
+      "IoT-based heat detection and activity monitoring.",
+      "Historical data collection and analytics.",
+      "Farmer-friendly dashboard and reporting system."
     ],
-    results: [
-      "Configured ESP32 telemetry cycles reducing power consumption by 65%.",
-      "Achieved a 92% cycle detection accuracy during initial testing stages.",
-      "Created a web dashboard displaying real-time livestock telemetry charts."
-    ],
-    tech: ["ESP32", "IoT Sensors", "Python", "React.js", "Firebase", "JavaScript"],
+    results: [],
+    tech: ["IoT Sensors", "Embedded Systems", "Database Management", "Web Development", "Mobile Development", "Data Analytics", "Machine Learning"],
     link: "",
     emoji: "🐄",
     gradient: "from-green-500/20 to-emerald-500/20 border-green-500/30",
@@ -72,6 +116,7 @@ const projects: Project[] = [
     tagline: "Premium Digital E-Commerce Platform (2026)",
     description: "High-performance digital account storefront utilizing microservice APIs, state sync, and secure transactional databases.",
     longDescription: "ApexFled is a full-featured digital storefront optimized for speed, reliability, and security. Utilizing Next.js Server Components, it fetches catalogue configurations dynamically with low server response times. The platform supports secure user profiles, Stripe checkout transactions, and PostgreSQL schemas with real-time stock sync.",
+    challengesLabel: "Key Features",
     challenges: [
       "Implementing optimistic state updates for immediate cart interactions.",
       "Restructuring database queries to prevent deadlock situations during flash sales.",
@@ -84,6 +129,7 @@ const projects: Project[] = [
     ],
     tech: ["Next.js", "TypeScript", "Tailwind CSS", "Supabase", "PostgreSQL", "REST APIs"],
     link: "https://github.com/SithikaWeerasinghe/digital-account-store",
+    website: "https://www.apexfled.com/",
     emoji: "🛍️",
     gradient: "from-blue-500/20 to-indigo-500/20 border-blue-500/30",
   },
@@ -94,6 +140,7 @@ const projects: Project[] = [
     tagline: "Interactive Puzzle Game (2026)",
     description: "Custom mobile word search game built using Google's Dart system and Material 3 design directives for fluid rendering.",
     longDescription: "WordSearch is an elegant, responsive mobile puzzle game built in Flutter. Adhering strictly to Material 3 guidelines, the interface automatically shifts colors to harmonize with themes. It features a custom grid-drawing canvas that maps touch vectors to letter paths, complete with smooth particle animations.",
+    challengesLabel: "Key Features",
     challenges: [
       "Calculating touch coordinate intersections on irregular screen aspect ratios.",
       "Building an offline dictionary index that validates 10,000+ words within milliseconds.",
@@ -116,6 +163,7 @@ const projects: Project[] = [
     tagline: "AI Gesture Brightness Controller (2026)",
     description: "Computer vision mapping utilities converting hand geometry coordinates into active Windows system adjustments in real time.",
     longDescription: "Vision Brightness Sync is a hands-free computer control utility. Running a lightweight background camera capture loop, it maps hand gesture geometry vectors from MediaPipe's hand-tracker to control Windows system brightness, allowing contactless system management.",
+    challengesLabel: "Key Features",
     challenges: [
       "Reducing camera feed processing overhead to prevent high CPU usage states.",
       "Mitigating brightness jitter by implementing moving average filters on coordinate vectors.",
@@ -179,15 +227,6 @@ export default function Projects() {
               data-cursor="card"
             >
               <div className="flex items-center gap-5 sm:gap-6 flex-1 min-w-0">
-                {/* Horizontal thumbnail image box */}
-                <div className={`w-[90px] h-[95px] sm:w-[130px] sm:h-[135px] rounded-[18px] shrink-0 bg-gradient-to-br ${project.gradient} border flex items-center justify-center relative overflow-hidden group-hover:scale-[1.03] transition-transform duration-500`}>
-                  <span className="text-3xl sm:text-5xl group-hover:rotate-6 transition-transform duration-500">
-                    {project.emoji}
-                  </span>
-                  
-                  {/* Glass highlight glare */}
-                  <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-                </div>
 
                 {/* Project Details */}
                 <div className="flex-1 min-w-0 text-left space-y-1 sm:space-y-2">
@@ -214,134 +253,173 @@ export default function Projects() {
 
       </div>
 
-      {/* Case Study sliding panel */}
-      <AnimatePresence>
-        {selectedProject && (
-          <div className="fixed inset-0 z-50 flex items-center justify-end">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setSelectedProject(null)}
-              className="absolute inset-0 bg-[var(--bg)]/80 dark:bg-[#0c0e12]/80 backdrop-blur-md"
-            />
+      {/* Centered rectangle modal — rendered in a portal to escape stacking context */}
+      {typeof window !== "undefined" && createPortal(
+        <AnimatePresence>
+          {selectedProject && (
+            <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-5">
 
-            <motion.div
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ type: "spring", damping: 26, stiffness: 220 }}
-              className="relative w-full max-w-xl h-full bg-[var(--bg)] border-l border-[var(--border)] p-8 sm:p-12 overflow-y-auto shadow-2xl z-10 flex flex-col justify-between"
-            >
-              <button
+              {/* Blurred backdrop */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
                 onClick={() => setSelectedProject(null)}
-                className="absolute top-6 right-6 p-2 rounded-full border border-[var(--border)] hover:bg-[var(--surface)] text-[var(--muted)] hover:text-[var(--dark)] transition-colors cursor-pointer"
-                aria-label="Close Case Study"
-                data-hover="true"
+                className="absolute inset-0 bg-black/60 backdrop-blur-md"
+              />
+
+              {/* Modal card */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.96, y: 24 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.96, y: 24 }}
+                transition={{ type: "spring", damping: 30, stiffness: 280 }}
+                className="relative w-[92vw] max-w-4xl h-[92vh] bg-[var(--bg)] border border-[var(--border)] rounded-2xl shadow-2xl z-10 flex flex-col overflow-hidden"
               >
-                <X className="w-5 h-5" />
-              </button>
-
-              <div className="space-y-8 mt-6">
-                <div className="flex items-center gap-4">
-                  <div className={`w-20 h-20 rounded-2xl bg-gradient-to-br ${selectedProject.gradient} flex items-center justify-center text-5xl shadow-inner border select-none`}>
-                    {selectedProject.emoji}
+                {/* ── Header ── */}
+                <div className="px-12 pt-10 pb-8 border-b border-[var(--border)] shrink-0">
+                  <div className="flex items-start justify-between gap-6">
+                    <div className="flex-1">
+                      <h4 className="font-display text-4xl font-light text-[var(--dark)] italic leading-tight mt-3">
+                        {selectedProject.title}
+                      </h4>
+                      <p className="text-[var(--accent)] font-sans text-sm font-semibold tracking-wide mt-4">
+                        {selectedProject.tagline}
+                      </p>
+                    </div>
+                    <button
+                      onClick={() => setSelectedProject(null)}
+                      className="p-2.5 rounded-full border border-[var(--border)] hover:bg-[var(--surface)] text-[var(--muted)] hover:text-[var(--dark)] transition-colors shrink-0 cursor-pointer mt-1"
+                      aria-label="Close"
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
                   </div>
-                  <div>
-                    <span className="text-[10px] font-sans font-extrabold tracking-widest text-[var(--accent)] uppercase">
-                      {selectedProject.category}
-                    </span>
-                    <h4 className="font-display text-3xl font-light text-[var(--dark)] italic leading-tight">
-                      {selectedProject.title}
-                    </h4>
+                </div>
+
+                {/* ── Scrollable body ── */}
+                <div className="overflow-y-auto flex-1 px-12 py-10 space-y-10">
+
+                  {/* Overview */}
+                  <div className="space-y-4">
+                    <p className="text-[var(--dark)] text-[15px] font-light leading-[1.9] opacity-80">
+                      {selectedProject.longDescription}
+                    </p>
                   </div>
+
+                  <div className="border-t border-[var(--border)] my-6" />
+
+                  {/* Engineering Challenges */}
+                  <div className="space-y-4">
+                    <h5 className="text-[11px] font-sans font-extrabold tracking-[0.2em] uppercase text-[var(--muted)]">
+                      {selectedProject.challengesLabel ?? "Engineering Challenges"}
+                    </h5>
+                    <ul className="space-y-3 pl-1">
+                      {selectedProject.challenges.map((challenge, idx) => (
+                        <li key={idx} className="flex gap-3 text-[14px] text-[var(--dark)] font-light opacity-75 leading-[1.8]">
+                          <span className="text-[var(--accent)] font-bold shrink-0 mt-0.5">•</span>
+                          <span>{challenge}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {selectedProject.results.length > 0 && (
+                    <>
+                      <div className="border-t border-[var(--border)] my-6" />
+                      <div className="space-y-4">
+                        <h5 className="text-[11px] font-sans font-extrabold tracking-[0.2em] uppercase text-[var(--muted)]">
+                          {selectedProject.resultsLabel ?? "Key Deliverables & Results"}
+                        </h5>
+                        <ul className="space-y-4">
+                          {selectedProject.results.map((result, idx) => (
+                            <li key={idx} className="flex gap-4 text-[14px] text-[var(--dark)] font-light opacity-75 leading-[1.8]">
+                              <CheckCircle className="w-4 h-4 text-emerald-500 shrink-0 mt-1" />
+                              <span>{result}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </>
+                  )}
+
+                  <div className="border-t border-[var(--border)] my-6" />
+
+                  {/* Tech Stack */}
+                  <div className="space-y-4">
+                    <h5 className="text-[11px] font-sans font-extrabold tracking-[0.2em] uppercase text-[var(--muted)]">
+                      Technology Stack
+                    </h5>
+                    <div className="flex flex-wrap gap-3">
+                      {selectedProject.tech.map((t) => {
+                        const slug = techIconMap[t];
+                        return slug ? (
+                          <span
+                            key={t}
+                            title={t}
+                            className="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-[var(--surface)] border border-[var(--border)] hover:border-[var(--accent)] transition-colors duration-200"
+                          >
+                            <img
+                              src={`https://cdn.simpleicons.org/${slug}`}
+                              alt={t}
+                              className="w-5 h-5 tech-icon"
+                              onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
+                            />
+                          </span>
+                        ) : (
+                          <span
+                            key={t}
+                            title={t}
+                            className="inline-flex items-center px-3 py-2 text-[10px] font-bold rounded-lg bg-[var(--surface)] border border-[var(--border)] text-[var(--dark)] uppercase tracking-wider"
+                          >
+                            {t}
+                          </span>
+                        );
+                      })}
+                    </div>
+                  </div>
+
                 </div>
 
-                <p className="text-[var(--accent)] font-sans text-xs font-semibold tracking-wide border-b border-[var(--border)] pb-4">
-                  {selectedProject.tagline}
-                </p>
-
-                <div className="space-y-4">
-                  <h5 className="text-[9px] font-sans font-extrabold tracking-widest uppercase text-[var(--muted)]">
-                    Overview
-                  </h5>
-                  <p className="text-[var(--muted)] dark:text-[var(--muted-light)] text-sm font-light leading-relaxed">
-                    {selectedProject.longDescription}
-                  </p>
-                </div>
-
-                <div className="space-y-3">
-                  <h5 className="text-[9px] font-sans font-extrabold tracking-widest uppercase text-[var(--muted)]">
-                    Engineering Challenges
-                  </h5>
-                  <ul className="space-y-2.5">
-                    {selectedProject.challenges.map((challenge, idx) => (
-                      <li key={idx} className="flex gap-2.5 text-xs text-[var(--muted)] dark:text-[var(--muted-light)] font-light">
-                        <Code className="w-4 h-4 text-[var(--accent)] shrink-0 mt-0.5" />
-                        <span>{challenge}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="space-y-3">
-                  <h5 className="text-[9px] font-sans font-extrabold tracking-widest uppercase text-[var(--muted)]">
-                    Key Deliverables & Results
-                  </h5>
-                  <ul className="space-y-2.5">
-                    {selectedProject.results.map((result, idx) => (
-                      <li key={idx} className="flex gap-2.5 text-xs text-[var(--muted)] dark:text-[var(--muted-light)] font-light">
-                        <CheckCircle className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                        <span>{result}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="space-y-3">
-                  <h5 className="text-[9px] font-sans font-extrabold tracking-widest uppercase text-[var(--muted)]">
-                    Technology Stack
-                  </h5>
-                  <div className="flex flex-wrap gap-2">
-                    {selectedProject.tech.map((t) => (
-                      <span
-                        key={t}
-                        className="px-3 py-1 text-[9px] font-extrabold rounded-full bg-[var(--surface)] border border-[var(--border)] text-[var(--dark)] uppercase"
+                {/* ── Footer ── */}
+                <div className="border-t border-[var(--border)] px-12 py-6 flex justify-end items-center shrink-0 bg-[var(--surface)]/40">
+                  <div className="flex items-center gap-3">
+                    {selectedProject.link && (
+                      <a
+                        href={selectedProject.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        title="View GitHub Repository"
+                        className="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-[var(--surface)] border border-[var(--border)] hover:border-[var(--dark)] hover:bg-[var(--dark)] hover:text-[var(--bg)] text-[var(--dark)] transition-all duration-200"
                       >
-                        {t}
+                        <Github className="w-4 h-4" />
+                      </a>
+                    )}
+                    {selectedProject.website && (
+                      <a
+                        href={selectedProject.website}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        title="Visit Live Website"
+                        className="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-[var(--surface)] border border-[var(--border)] hover:border-[var(--dark)] hover:bg-[var(--dark)] hover:text-[var(--bg)] text-[var(--dark)] transition-all duration-200"
+                      >
+                        <Globe className="w-4 h-4" />
+                      </a>
+                    )}
+                    {!selectedProject.link && !selectedProject.website && (
+                      <span className="px-4 py-2 rounded-lg bg-[var(--surface)] border border-[var(--border)] text-[var(--muted)] text-[12px] font-medium cursor-not-allowed select-none">
+                        Private Repository
                       </span>
-                    ))}
+                    )}
                   </div>
                 </div>
-              </div>
 
-              <div className="border-t border-[var(--border)] pt-6 mt-12 flex justify-between items-center">
-                <div className="flex items-center gap-2 text-[10px] font-sans font-extrabold text-[var(--muted)] tracking-wider uppercase select-none">
-                  <Calendar className="w-4 h-4" />
-                  <span>Case Study 2026</span>
-                </div>
-
-                {selectedProject.link ? (
-                  <a
-                    href={selectedProject.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-6 py-3 rounded-full bg-[var(--dark)] hover:bg-[var(--accent)] text-[var(--bg)] text-xs font-semibold flex items-center gap-2 group hover:scale-[1.03] active:scale-[0.97] transition-all duration-300"
-                    data-hover="true"
-                  >
-                    <span>View Repository</span>
-                    <ExternalLink className="w-3.5 h-3.5" />
-                  </a>
-                ) : (
-                  <span className="px-6 py-3 rounded-full bg-[var(--surface)] border border-[var(--border)] text-[var(--muted)] text-xs font-medium cursor-not-allowed select-none">
-                    Private Repository
-                  </span>
-                )}
-              </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
+              </motion.div>
+            </div>
+          )}
+        </AnimatePresence>,
+        document.body
+      )}
     </section>
   );
 }
