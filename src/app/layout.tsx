@@ -18,6 +18,7 @@ const dmSans = DM_Sans({
   display: "swap",
 });
 
+
 export const metadata: Metadata = {
   title: "Binethma Jayawickrama | Creative Developer Portfolio",
   description:
