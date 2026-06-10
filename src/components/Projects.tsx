@@ -274,49 +274,42 @@ export default function Projects() {
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.96, y: 24 }}
                 transition={{ type: "spring", damping: 30, stiffness: 280 }}
-                className="relative w-[92vw] max-w-4xl h-[92vh] bg-[var(--bg)] border border-[var(--border)] rounded-2xl shadow-2xl z-10 flex flex-col overflow-hidden"
+                className="relative w-[95vw] max-w-5xl h-[95vh] bg-[var(--bg)] border border-[var(--border)] rounded-2xl shadow-2xl z-10 flex flex-col overflow-hidden"
               >
                 {/* ── Header ── */}
-                <div className="px-12 pt-10 pb-8 border-b border-[var(--border)] shrink-0">
-                  <div className="flex items-start justify-between gap-6">
-                    <div className="flex-1">
-                      <h4 className="font-display text-4xl font-light text-[var(--dark)] italic leading-tight mt-3">
-                        {selectedProject.title}
-                      </h4>
-                      <p className="text-[var(--accent)] font-sans text-sm font-semibold tracking-wide mt-4">
-                        {selectedProject.tagline}
-                      </p>
-                    </div>
-                    <button
-                      onClick={() => setSelectedProject(null)}
-                      className="p-2.5 rounded-full border border-[var(--border)] hover:bg-[var(--surface)] text-[var(--muted)] hover:text-[var(--dark)] transition-colors shrink-0 cursor-pointer mt-1"
-                      aria-label="Close"
-                    >
-                      <X className="w-4 h-4" />
-                    </button>
-                  </div>
+                <div className="relative px-10 sm:px-16 pt-12 pb-20 shrink-0 flex items-center justify-center">
+                  <h4 className="font-display font-black text-3xl sm:text-4xl tracking-tight uppercase text-[var(--dark)] text-center max-w-[80%]">
+                    {selectedProject.title}
+                  </h4>
+                  <button
+                    onClick={() => setSelectedProject(null)}
+                    className="absolute right-10 sm:right-16 top-12 p-2.5 rounded-full border border-[var(--border)] hover:bg-[var(--surface)] text-[var(--muted)] hover:text-[var(--dark)] transition-colors cursor-pointer"
+                    aria-label="Close"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
                 </div>
 
                 {/* ── Scrollable body ── */}
-                <div className="overflow-y-auto flex-1 px-12 py-10 space-y-10">
+                <div className="overflow-y-auto flex-1 px-12 sm:px-24 pt-40 pb-16 flex flex-col gap-8 sm:gap-10 lg:gap-12">
 
                   {/* Overview */}
-                  <div className="space-y-4">
-                    <p className="text-[var(--dark)] text-[15px] font-light leading-[1.9] opacity-80">
+                  <div className="space-y-5 flex flex-col items-center px-4 sm:px-8">
+                    <p className="text-[var(--dark)] text-[16px] sm:text-[17px] font-light leading-[1.8] opacity-85 text-justify max-w-3xl">
                       {selectedProject.longDescription}
                     </p>
                   </div>
 
-                  <div className="border-t border-[var(--border)] my-6" />
-
                   {/* Engineering Challenges */}
-                  <div className="space-y-4">
-                    <h5 className="text-[11px] font-sans font-extrabold tracking-[0.2em] uppercase text-[var(--muted)]">
-                      {selectedProject.challengesLabel ?? "Engineering Challenges"}
-                    </h5>
-                    <ul className="space-y-3 pl-1">
+                  <div className="space-y-8 flex flex-col items-start px-4 sm:px-8 max-w-3xl mx-auto w-full">
+                    <div className="inline-flex items-center justify-center px-5 py-2 rounded-full bg-[var(--surface)] border border-[var(--border)] shadow-sm">
+                      <h5 className="text-[12px] font-sans font-extrabold tracking-[0.2em] uppercase text-[var(--dark)] text-left">
+                        {selectedProject.challengesLabel ?? "Engineering Challenges"}
+                      </h5>
+                    </div>
+                    <ul className="space-y-5 pl-2 w-full flex flex-col items-start">
                       {selectedProject.challenges.map((challenge, idx) => (
-                        <li key={idx} className="flex gap-3 text-[14px] text-[var(--dark)] font-light opacity-75 leading-[1.8]">
+                        <li key={idx} className="flex gap-4 text-[15px] sm:text-[16px] text-[var(--dark)] font-light opacity-80 leading-[1.9] text-left">
                           <span className="text-[var(--accent)] font-bold shrink-0 mt-0.5">•</span>
                           <span>{challenge}</span>
                         </li>
@@ -324,45 +317,28 @@ export default function Projects() {
                     </ul>
                   </div>
 
-                  {selectedProject.results.length > 0 && (
-                    <>
-                      <div className="border-t border-[var(--border)] my-6" />
-                      <div className="space-y-4">
-                        <h5 className="text-[11px] font-sans font-extrabold tracking-[0.2em] uppercase text-[var(--muted)]">
-                          {selectedProject.resultsLabel ?? "Key Deliverables & Results"}
-                        </h5>
-                        <ul className="space-y-4">
-                          {selectedProject.results.map((result, idx) => (
-                            <li key={idx} className="flex gap-4 text-[14px] text-[var(--dark)] font-light opacity-75 leading-[1.8]">
-                              <CheckCircle className="w-4 h-4 text-emerald-500 shrink-0 mt-1" />
-                              <span>{result}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </>
-                  )}
 
-                  <div className="border-t border-[var(--border)] my-6" />
 
                   {/* Tech Stack */}
-                  <div className="space-y-4">
-                    <h5 className="text-[11px] font-sans font-extrabold tracking-[0.2em] uppercase text-[var(--muted)]">
-                      Technology Stack
-                    </h5>
-                    <div className="flex flex-wrap gap-3">
+                  <div className="space-y-8 flex flex-col items-center">
+                    <div className="inline-flex items-center justify-center px-5 py-2 rounded-full bg-[var(--surface)] border border-[var(--border)] shadow-sm">
+                      <h5 className="text-[12px] font-sans font-extrabold tracking-[0.2em] uppercase text-[var(--dark)] text-center">
+                        Technology Stack
+                      </h5>
+                    </div>
+                    <div className="flex flex-wrap gap-4 justify-center">
                       {selectedProject.tech.map((t) => {
                         const slug = techIconMap[t];
                         return slug ? (
                           <span
                             key={t}
                             title={t}
-                            className="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-[var(--surface)] border border-[var(--border)] hover:border-[var(--accent)] transition-colors duration-200"
+                            className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-[var(--surface)] border border-[var(--border)] hover:border-[var(--accent)] hover:shadow-sm transition-all duration-200"
                           >
                             <img
                               src={`https://cdn.simpleicons.org/${slug}`}
                               alt={t}
-                              className="w-5 h-5 tech-icon"
+                              className="w-6 h-6 tech-icon"
                               onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
                             />
                           </span>
@@ -382,17 +358,17 @@ export default function Projects() {
                 </div>
 
                 {/* ── Footer ── */}
-                <div className="border-t border-[var(--border)] px-12 py-6 flex justify-end items-center shrink-0 bg-[var(--surface)]/40">
-                  <div className="flex items-center gap-3">
+                <div className="border-t border-[var(--border)] px-10 sm:px-16 py-8 flex justify-end items-center shrink-0 bg-[var(--surface)]/40">
+                  <div className="flex items-center gap-4">
                     {selectedProject.link && (
                       <a
                         href={selectedProject.link}
                         target="_blank"
                         rel="noopener noreferrer"
                         title="View GitHub Repository"
-                        className="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-[var(--surface)] border border-[var(--border)] hover:border-[var(--dark)] hover:bg-[var(--dark)] hover:text-[var(--bg)] text-[var(--dark)] transition-all duration-200"
+                        className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-[var(--surface)] border border-[var(--border)] hover:border-[var(--dark)] hover:bg-[var(--dark)] hover:text-[var(--bg)] text-[var(--dark)] transition-all duration-200"
                       >
-                        <Github className="w-4 h-4" />
+                        <Github className="w-5 h-5" />
                       </a>
                     )}
                     {selectedProject.website && (
@@ -401,9 +377,9 @@ export default function Projects() {
                         target="_blank"
                         rel="noopener noreferrer"
                         title="Visit Live Website"
-                        className="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-[var(--surface)] border border-[var(--border)] hover:border-[var(--dark)] hover:bg-[var(--dark)] hover:text-[var(--bg)] text-[var(--dark)] transition-all duration-200"
+                        className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-[var(--surface)] border border-[var(--border)] hover:border-[var(--dark)] hover:bg-[var(--dark)] hover:text-[var(--bg)] text-[var(--dark)] transition-all duration-200"
                       >
-                        <Globe className="w-4 h-4" />
+                        <Globe className="w-5 h-5" />
                       </a>
                     )}
                     {!selectedProject.link && !selectedProject.website && (
