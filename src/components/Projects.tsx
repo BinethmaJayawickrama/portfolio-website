@@ -323,7 +323,7 @@ export default function Projects() {
                   <div className="space-y-8 flex flex-col items-center">
                     <div className="inline-flex items-center justify-center px-5 py-2 rounded-full bg-[var(--surface)] border border-[var(--border)] shadow-sm">
                       <h5 className="text-[12px] font-sans font-extrabold tracking-[0.2em] uppercase text-[var(--dark)] text-center">
-                        Technology Stack
+                        Technologies
                       </h5>
                     </div>
                     <div className="flex flex-wrap gap-4 justify-center">
