@@ -40,6 +40,23 @@ export default function Home() {
       document.documentElement.classList.remove("dark");
     }
 
+    // Track mouse position for parallax grid shift
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePos({
+        x: (e.clientX / window.innerWidth - 0.5) * 15,
+        y: (e.clientY / window.innerHeight - 0.5) * 15,
+      });
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!isLoaded) return;
+
     // Initialize Lenis smooth scroll
     const lenis = new Lenis({
       lerp: 0.08,
@@ -56,22 +73,26 @@ export default function Home() {
     gsap.ticker.add(tickerCallback);
     gsap.ticker.lagSmoothing(0);
 
-    // Track mouse position for parallax grid shift
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePos({
-        x: (e.clientX / window.innerWidth - 0.5) * 15,
-        y: (e.clientY / window.innerHeight - 0.5) * 15,
-      });
+    // Refresh ScrollTrigger and Lenis after entrance animation completes
+    const timer = setTimeout(() => {
+      ScrollTrigger.refresh();
+      lenis.resize();
+    }, 1500);
+
+    const handleResize = () => {
+      lenis.resize();
+      ScrollTrigger.refresh();
     };
-    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("resize", handleResize);
 
     return () => {
+      clearTimeout(timer);
+      window.removeEventListener("resize", handleResize);
       gsap.ticker.remove(tickerCallback);
       lenis.destroy();
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-      window.removeEventListener("mousemove", handleMouseMove);
     };
-  }, []);
+  }, [isLoaded]);
 
   const toggleTheme = () => {
     const nextTheme = theme === "dark" ? "light" : "dark";
@@ -119,6 +140,21 @@ export default function Home() {
             </div>
 
           </main>
+
+          {/* Spacer to guarantee vertical padding/separation between the main layout and footer */}
+          <div style={{ height: "100px" }} className="w-full block" />
+
+          {/* Footer placed at the bottom, centered relative to the webpage */}
+          <footer 
+            style={{ paddingTop: "20px", paddingBottom: "40px" }}
+            className="w-full text-[11px] font-sans text-[var(--muted)] select-none relative z-10 text-center whitespace-normal sm:whitespace-nowrap"
+          >
+            <div className="flex items-center justify-center">
+              <p className="tracking-wide">
+                &copy; {new Date().getFullYear()} <span className="text-[var(--accent)] font-semibold transition-colors duration-300">Binethma Jayawickrama</span>. All rights reserved.
+              </p>
+            </div>
+          </footer>
          </motion.div>
         </>
       )}

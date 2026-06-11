@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Send, CheckCircle2, Loader2, Phone, Mail, MapPin, Briefcase } from "lucide-react";
+import { Send, CheckCircle2, Loader2, Phone, Mail, MapPin, Briefcase, ArrowUpRight, ArrowUp } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { gsap } from "gsap";
 
@@ -48,12 +48,12 @@ export default function Contact() {
   };
 
   return (
-    <div className="relative z-10 w-full contact-trigger bg-transparent min-h-screen flex flex-col justify-center">
+    <div className="relative z-10 w-full contact-trigger bg-transparent flex flex-col">
       
       {/* Background Radial Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[var(--accent)]/5 blur-[120px] rounded-full pointer-events-none z-0" />
 
-      <section id="contact" className="py-12 sm:py-24 relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-0 text-[var(--dark)]">
+      <section id="contact" className="pt-12 pb-20 sm:pt-24 sm:pb-32 relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-0 text-[var(--dark)]">
         
         <div className="flex flex-col items-center justify-center gap-16">
           
@@ -202,69 +202,81 @@ export default function Contact() {
           </div>
 
           {/* BOTTOM: Contact Details Row */}
-          <div className="contact-reveal-element w-full pt-10 border-t border-[var(--border)] grid grid-cols-2 md:grid-cols-4 gap-8">
-            <div className="flex flex-col items-center text-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-[var(--surface)] border border-[var(--border)] flex items-center justify-center text-[var(--dark)]">
-                <Mail className="w-4 h-4" />
+          <div className="contact-reveal-element w-full pt-10 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+            
+            {/* Email */}
+            <a 
+              href="mailto:binethmad@gmail.com" 
+              className="flex flex-col items-center text-center group/item w-full py-4 transition-all duration-300"
+            >
+              <div className="w-12 h-12 rounded-full bg-[var(--surface)] border border-[var(--border)] flex items-center justify-center text-[var(--dark)] group-hover/item:bg-[var(--accent)]/10 group-hover/item:border-[var(--accent)] group-hover/item:text-[var(--accent)] group-hover/item:scale-110 group-hover/item:-translate-y-1 transition-all duration-500">
+                <Mail className="w-5 h-5 transition-transform duration-500 group-hover/item:scale-110" />
               </div>
-              <div>
-                <span className="block text-[9px] font-extrabold text-[var(--muted)] uppercase tracking-wider mb-0.5">Email</span>
-                <span className="text-xs sm:text-sm font-semibold text-[var(--dark)]">binethmad@gmail.com</span>
-              </div>
-            </div>
+              <span className="block text-[9px] font-mono tracking-widest text-[var(--muted)] uppercase font-semibold mt-3.5 mb-1.5">
+                Email
+              </span>
+              <span className="text-xs sm:text-[13px] font-semibold text-[var(--dark)] group-hover/item:text-[var(--accent)] transition-colors duration-300 whitespace-nowrap px-1">
+                binethmad@gmail.com
+              </span>
+            </a>
 
-            <div className="flex flex-col items-center text-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-[var(--surface)] border border-[var(--border)] flex items-center justify-center text-[var(--dark)]">
-                <Phone className="w-4 h-4" />
+            {/* Phone */}
+            <a 
+              href="tel:+94701131651" 
+              className="flex flex-col items-center text-center group/item w-full py-4 transition-all duration-300"
+            >
+              <div className="w-12 h-12 rounded-full bg-[var(--surface)] border border-[var(--border)] flex items-center justify-center text-[var(--dark)] group-hover/item:bg-[var(--accent)]/10 group-hover/item:border-[var(--accent)] group-hover/item:text-[var(--accent)] group-hover/item:scale-110 group-hover/item:-translate-y-1 transition-all duration-500">
+                <Phone className="w-5 h-5 transition-transform duration-500 group-hover/item:scale-110" />
               </div>
-              <div>
-                <span className="block text-[9px] font-extrabold text-[var(--muted)] uppercase tracking-wider mb-0.5">Phone</span>
-                <span className="text-xs sm:text-sm font-semibold text-[var(--dark)]">+94 70 113 1651</span>
-              </div>
-            </div>
+              <span className="block text-[9px] font-mono tracking-widest text-[var(--muted)] uppercase font-semibold mt-3.5 mb-1.5">
+                Phone
+              </span>
+              <span className="text-xs sm:text-[13px] font-semibold text-[var(--dark)] group-hover/item:text-[var(--accent)] transition-colors duration-300 whitespace-nowrap px-1">
+                +94 70 113 1651
+              </span>
+            </a>
 
-            <div className="flex flex-col items-center text-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-[var(--surface)] border border-[var(--border)] flex items-center justify-center text-[var(--dark)]">
-                <MapPin className="w-4 h-4" />
+            {/* Location */}
+            <a 
+              href="https://maps.google.com/?q=Sri+Lanka"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex flex-col items-center text-center group/item w-full py-4 transition-all duration-300"
+            >
+              <div className="w-12 h-12 rounded-full bg-[var(--surface)] border border-[var(--border)] flex items-center justify-center text-[var(--dark)] group-hover/item:bg-[var(--accent)]/10 group-hover/item:border-[var(--accent)] group-hover/item:text-[var(--accent)] group-hover/item:scale-110 group-hover/item:-translate-y-1 transition-all duration-500">
+                <MapPin className="w-5 h-5 transition-transform duration-500 group-hover/item:scale-110" />
               </div>
-              <div>
-                <span className="block text-[9px] font-extrabold text-[var(--muted)] uppercase tracking-wider mb-0.5">Location</span>
-                <span className="text-xs sm:text-sm font-semibold text-[var(--dark)]">Sri Lanka</span>
-              </div>
-            </div>
+              <span className="block text-[9px] font-mono tracking-widest text-[var(--muted)] uppercase font-semibold mt-3.5 mb-1.5">
+                Location
+              </span>
+              <span className="text-xs sm:text-[13px] font-semibold text-[var(--dark)] group-hover/item:text-[var(--accent)] transition-colors duration-300 whitespace-nowrap px-1">
+                Sri Lanka
+              </span>
+            </a>
 
-            <div className="flex flex-col items-center text-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-[var(--surface)] border border-[var(--border)] flex items-center justify-center text-[var(--dark)]">
-                <Briefcase className="w-4 h-4" />
+            {/* Availability */}
+            <a 
+              href="https://www.linkedin.com/in/binethma-jayawickrama"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex flex-col items-center text-center group/item w-full py-4 transition-all duration-300"
+            >
+              <div className="w-12 h-12 rounded-full bg-[var(--surface)] border border-[var(--border)] flex items-center justify-center text-[var(--dark)] group-hover/item:bg-[var(--accent)]/10 group-hover/item:border-[var(--accent)] group-hover/item:text-[var(--accent)] group-hover/item:scale-110 group-hover/item:-translate-y-1 transition-all duration-500">
+                <Briefcase className="w-5 h-5 transition-transform duration-500 group-hover/item:scale-110" />
               </div>
-              <div>
-                <span className="block text-[9px] font-extrabold text-[var(--muted)] uppercase tracking-wider mb-0.5">Availability</span>
-                <span className="text-xs sm:text-sm font-semibold text-[var(--dark)]">Internships</span>
-              </div>
-            </div>
+              <span className="block text-[9px] font-mono tracking-widest text-[var(--muted)] uppercase font-semibold mt-3.5 mb-1.5">
+                Availability
+              </span>
+              <span className="text-xs sm:text-[13px] font-semibold text-[var(--dark)] group-hover/item:text-[var(--accent)] transition-colors duration-300 whitespace-nowrap px-1">
+                Internships
+              </span>
+            </a>
+
           </div>
 
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="w-full py-8 border-t border-[var(--border)] text-[11px] font-sans text-[var(--muted)] select-none relative z-10 max-w-7xl mx-auto px-4 sm:px-8 mt-12">
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div>
-            &copy; {new Date().getFullYear()} Binethma Jayawickrama. All rights reserved.
-          </div>
-          
-          <div className="font-display font-light italic tracking-widest text-sm text-[var(--accent-deep)] dark:text-white select-none">
-            B · J
-          </div>
-
-          <div className="flex items-center gap-1.5">
-            <span>Made with</span>
-            <span className="text-[var(--accent)] font-bold">♡</span>
-            <span>inspired by Sawad</span>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }
