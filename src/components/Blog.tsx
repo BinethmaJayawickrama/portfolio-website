@@ -78,7 +78,7 @@ export default function Blog() {
       <div className="w-full space-y-12 blog-section-trigger">
         
         {/* Section Heading */}
-        <div className="flex flex-col items-start gap-1">
+        <div className="flex flex-row flex-wrap items-end gap-3 sm:gap-4 md:gap-5">
           <h2 className="font-display font-black text-5xl sm:text-6xl md:text-[5.4rem] tracking-tight leading-[0.95] uppercase">
             MY
           </h2>
