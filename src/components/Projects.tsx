@@ -228,7 +228,7 @@ export default function Projects() {
               data-cursor="card"
             >
               <div className="flex-1 min-w-0 text-left space-y-1">
-                <h3 className="font-display font-semibold text-lg sm:text-xl md:text-2xl italic text-[var(--dark)] leading-tight group-hover:text-[var(--accent)] transition-colors">
+                <h3 className="font-display font-semibold text-[22px] sm:text-[25px] md:text-[28px] italic text-[var(--dark)] leading-tight group-hover:text-[var(--accent)] transition-colors">
                   {project.title}
                 </h3>
                 <p className="text-xs sm:text-[13px] font-sans font-light text-[var(--muted)] dark:text-[var(--muted-light)] leading-relaxed line-clamp-2">
@@ -270,18 +270,20 @@ export default function Projects() {
                 transition={{ type: "spring", damping: 30, stiffness: 280 }}
                 className="relative w-[95vw] max-w-5xl h-[95vh] bg-[var(--bg)] border border-[var(--border)] rounded-2xl shadow-2xl z-10 flex flex-col overflow-hidden"
               >
+                {/* Close Button at top right corner of the modal */}
+                <button
+                  onClick={() => setSelectedProject(null)}
+                  className="absolute right-4 top-4 sm:right-6 sm:top-6 z-50 p-2.5 rounded-full border border-[var(--border)] bg-[var(--bg)]/80 backdrop-blur-md hover:bg-[var(--surface)] text-[var(--muted)] hover:text-[var(--dark)] transition-colors cursor-pointer"
+                  aria-label="Close"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+
                 {/* ── Header ── */}
                 <div className="relative px-10 sm:px-16 pt-12 pb-20 shrink-0 flex items-center justify-center">
                   <h4 className="font-display font-black text-3xl sm:text-4xl tracking-tight uppercase text-[var(--dark)] text-center max-w-[80%]">
                     {selectedProject.title}
                   </h4>
-                  <button
-                    onClick={() => setSelectedProject(null)}
-                    className="absolute right-10 sm:right-16 top-12 p-2.5 rounded-full border border-[var(--border)] hover:bg-[var(--surface)] text-[var(--muted)] hover:text-[var(--dark)] transition-colors cursor-pointer"
-                    aria-label="Close"
-                  >
-                    <X className="w-4 h-4" />
-                  </button>
                 </div>
 
                 {/* ── Scrollable body ── */}
