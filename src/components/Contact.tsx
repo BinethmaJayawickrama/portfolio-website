@@ -96,10 +96,10 @@ export default function Contact() {
                             value={formState.name}
                             onChange={(e) => setFormState({ ...formState, name: e.target.value })}
                             placeholder="Your Name"
-                            className="peer w-full rounded-xl border-none bg-[#333] hover:bg-[#383838] text-[#ddd] placeholder:text-[#888] text-[15px] focus:outline-none focus:bg-[#404040] focus:ring-1 focus:ring-[#f46c38] transition-all duration-300"
+                            className="peer w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] hover:bg-[var(--surface)]/80 text-[var(--dark)] placeholder:text-[var(--muted)] text-[15px] focus:outline-none focus:bg-[var(--bg)] focus:ring-1 focus:ring-[var(--accent)] transition-all duration-300"
                             style={{ padding: "20px 24px" }}
                           />
-                          <label htmlFor="form-name" className="text-[13px] font-medium text-[#999] peer-focus:text-[#f46c38] transition-colors duration-300">
+                          <label htmlFor="form-name" className="text-[13px] font-medium text-[var(--muted)] peer-focus:text-[var(--accent)] transition-colors duration-300">
                             Name
                           </label>
                         </div>
@@ -113,10 +113,10 @@ export default function Contact() {
                             value={formState.email}
                             onChange={(e) => setFormState({ ...formState, email: e.target.value })}
                             placeholder="Your@email.com"
-                            className="peer w-full rounded-xl border-none bg-[#333] hover:bg-[#383838] text-[#ddd] placeholder:text-[#888] text-[15px] focus:outline-none focus:bg-[#404040] focus:ring-1 focus:ring-[#f46c38] transition-all duration-300"
+                            className="peer w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] hover:bg-[var(--surface)]/80 text-[var(--dark)] placeholder:text-[var(--muted)] text-[15px] focus:outline-none focus:bg-[var(--bg)] focus:ring-1 focus:ring-[var(--accent)] transition-all duration-300"
                             style={{ padding: "20px 24px" }}
                           />
-                          <label htmlFor="form-email" className="text-[13px] font-medium text-[#999] peer-focus:text-[#f46c38] transition-colors duration-300">
+                          <label htmlFor="form-email" className="text-[13px] font-medium text-[var(--muted)] peer-focus:text-[var(--accent)] transition-colors duration-300">
                             Email
                           </label>
                         </div>
@@ -131,10 +131,10 @@ export default function Contact() {
                           value={formState.subject}
                           onChange={(e) => setFormState({ ...formState, subject: e.target.value })}
                           placeholder="Write the subject"
-                          className="peer w-full rounded-xl border-none bg-[#333] hover:bg-[#383838] text-[#ddd] placeholder:text-[#888] text-[15px] focus:outline-none focus:bg-[#404040] focus:ring-1 focus:ring-[#f46c38] transition-all duration-300"
+                          className="peer w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] hover:bg-[var(--surface)]/80 text-[var(--dark)] placeholder:text-[var(--muted)] text-[15px] focus:outline-none focus:bg-[var(--bg)] focus:ring-1 focus:ring-[var(--accent)] transition-all duration-300"
                           style={{ padding: "20px 24px" }}
                         />
-                        <label htmlFor="form-subject" className="text-[13px] font-medium text-[#999] peer-focus:text-[#f46c38] transition-colors duration-300">
+                        <label htmlFor="form-subject" className="text-[13px] font-medium text-[var(--muted)] peer-focus:text-[var(--accent)] transition-colors duration-300">
                           Subject
                         </label>
                       </div>
@@ -148,10 +148,10 @@ export default function Contact() {
                           value={formState.message}
                           onChange={(e) => setFormState({ ...formState, message: e.target.value })}
                           placeholder="Message"
-                          className="peer w-full rounded-xl border-none bg-[#333] hover:bg-[#383838] text-[#ddd] placeholder:text-[#888] text-[15px] focus:outline-none focus:bg-[#404040] focus:ring-1 focus:ring-[#f46c38] transition-all duration-300 resize-none"
+                          className="peer w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] hover:bg-[var(--surface)]/80 text-[var(--dark)] placeholder:text-[var(--muted)] text-[15px] focus:outline-none focus:bg-[var(--bg)] focus:ring-1 focus:ring-[var(--accent)] transition-all duration-300 resize-none"
                           style={{ padding: "20px 24px" }}
                         />
-                        <label htmlFor="form-message" className="text-[13px] font-medium text-[#999] peer-focus:text-[#f46c38] transition-colors duration-300">
+                        <label htmlFor="form-message" className="text-[13px] font-medium text-[var(--muted)] peer-focus:text-[var(--accent)] transition-colors duration-300">
                           Message
                         </label>
                       </div>
@@ -161,7 +161,7 @@ export default function Contact() {
                         <button
                           type="submit"
                           disabled={isSubmitting}
-                          className="w-full rounded-xl bg-[#f46c38] hover:bg-[#e05b2a] text-white font-semibold text-[15px] transition-all duration-300 shadow-lg cursor-pointer disabled:opacity-50"
+                          className="w-full rounded-xl bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-[var(--accent-text)] font-semibold text-[15px] transition-all duration-300 shadow-lg cursor-pointer disabled:opacity-50"
                           style={{ padding: "20px 24px" }}
                         >
                           {isSubmitting ? (

@@ -13,7 +13,7 @@ import Hero from "@/components/Hero";
 import Skills from "@/components/Skills";
 import Projects from "@/components/Projects";
 import Blog from "@/components/Blog";
-import Education from "@/components/Education";
+
 import Contact from "@/components/Contact";
 
 // Register ScrollTrigger plugin
@@ -133,7 +133,7 @@ export default function Home() {
               <div className="flex-1 w-full lg:max-w-[640px] min-w-0 flex flex-col gap-24 md:gap-32 lg:gap-[120px] z-10">
               <Hero />
               <Projects />
-              <Education />
+
               <Skills />
               <Blog />
               <Contact />

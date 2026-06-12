@@ -223,27 +223,21 @@ export default function Projects() {
             <div
               key={project.id}
               onClick={() => setSelectedProject(project)}
-              className="project-row-item py-6 border-b border-[var(--border)] flex items-center justify-between gap-6 cursor-pointer group hover:bg-[var(--surface)]/20 transition-all duration-300 px-2 sm:px-4"
+              style={{ paddingTop: "32px", paddingBottom: "32px" }}
+              className="project-row-item py-16 sm:py-24 border-b border-[var(--border)] flex items-center justify-between gap-6 cursor-pointer group hover:bg-[var(--surface)]/25 transition-all duration-500 ease-out px-2 sm:px-4"
               data-cursor="card"
             >
-              <div className="flex items-center gap-5 sm:gap-6 flex-1 min-w-0">
-
-                {/* Project Details */}
-                <div className="flex-1 min-w-0 text-left space-y-1 sm:space-y-2">
-                  <span className="text-[9px] font-sans font-extrabold tracking-widest text-[var(--muted)] uppercase">
-                    {project.category}
-                  </span>
-                  <h3 className="font-display font-semibold text-lg sm:text-2xl italic text-[var(--dark)] leading-tight group-hover:text-[var(--accent)] transition-colors">
-                    {project.title}
-                  </h3>
-                  <p className="text-xs sm:text-[13px] font-sans font-light text-[var(--muted)] dark:text-[var(--muted-light)] leading-relaxed line-clamp-2">
-                    {project.description}
-                  </p>
-                </div>
+              <div className="flex-1 min-w-0 text-left space-y-1">
+                <h3 className="font-display font-semibold text-lg sm:text-xl md:text-2xl italic text-[var(--dark)] leading-tight group-hover:text-[var(--accent)] transition-colors">
+                  {project.title}
+                </h3>
+                <p className="text-xs sm:text-[13px] font-sans font-light text-[var(--muted)] dark:text-[var(--muted-light)] leading-relaxed line-clamp-2">
+                  {project.description}
+                </p>
               </div>
 
-              {/* Arrow Up Right Button */}
-              <div className="w-10 h-10 rounded-full border border-[var(--border)] flex items-center justify-center text-[var(--muted)] group-hover:text-[var(--accent)] group-hover:border-[var(--accent)] group-hover:rotate-45 transition-all duration-300 shrink-0">
+              {/* Dynamic Arrow Button */}
+              <div className="w-11 h-11 rounded-full border border-[var(--border)] bg-[var(--surface)]/30 flex items-center justify-center text-[var(--muted)] group-hover:text-white group-hover:bg-[var(--accent)] group-hover:border-[var(--accent)] group-hover:rotate-45 transition-all duration-500 shadow-sm shrink-0">
                 <ArrowUpRight className="w-4.5 h-4.5" />
               </div>
 

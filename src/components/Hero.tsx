@@ -69,20 +69,20 @@ export default function Hero() {
         {/* ── CTA Buttons ── */}
         <div className="flex items-center gap-4">
 
-          {/* Primary — dark fill */}
+          {/* Primary — yellow accent fill */}
           <button
             onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}
-            className="hero-cta inline-flex items-center justify-center rounded-md font-sans font-bold text-[15px] bg-[var(--dark)] text-[var(--bg)] hover:opacity-85 transition-opacity duration-200"
+            className="hero-cta inline-flex items-center justify-center rounded-md font-sans font-bold text-[15px] bg-[var(--accent)] text-[var(--accent-text)] hover:opacity-90 transition-opacity duration-200"
             style={{ padding: "20px 52px" }}
           >
             View Work
           </button>
 
-          {/* Secondary — light fill */}
+          {/* Secondary — white fill */}
           <a
             href="/cv.pdf"
             download
-            className="hero-cta inline-flex items-center justify-center rounded-md font-sans font-bold text-[15px] bg-[var(--surface)] text-[var(--dark)] hover:opacity-80 transition-opacity duration-200"
+            className="hero-cta inline-flex items-center justify-center rounded-md font-sans font-bold text-[15px] bg-white text-black border border-neutral-200 dark:border-transparent hover:bg-neutral-50 dark:hover:bg-neutral-100 transition-all duration-200"
             style={{ padding: "20px 52px" }}
           >
             Download Resume

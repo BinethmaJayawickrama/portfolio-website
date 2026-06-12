@@ -7,7 +7,7 @@ import { Home, Folder, Briefcase, Wrench, BookOpen, SquarePen, Sun, Moon } from 
 const navItems = [
   { id: "home", label: "Home", icon: Home },
   { id: "projects", label: "Projects", icon: Folder },
-  { id: "experience", label: "Experience", icon: Briefcase },
+
   { id: "tools", label: "Tools", icon: Wrench },
   { id: "blog", label: "Blogs", icon: BookOpen },
   { id: "contact", label: "Contact", icon: SquarePen },
@@ -25,8 +25,8 @@ export default function Navbar({ theme, toggleTheme }: NavbarProps) {
   useEffect(() => {
     const observerOptions = {
       root: null,
-      rootMargin: "-45% 0px -45% 0px",
-      threshold: 0.1,
+      rootMargin: "-30% 0px -30% 0px",
+      threshold: 0.05,
     };
 
     const handleIntersection = (entries: IntersectionObserverEntry[]) => {

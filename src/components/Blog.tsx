@@ -103,7 +103,7 @@ export default function Blog() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    className="absolute inset-0 bg-[var(--surface)]/95 dark:bg-[#0c0e12]/95 z-20 flex flex-col items-center justify-center text-[var(--dark)]"
+                    className="absolute inset-0 bg-[var(--surface)]/95 dark:bg-[var(--bg)]/95 z-20 flex flex-col items-center justify-center text-[var(--dark)]"
                   >
                     <span className="font-display font-semibold italic text-xl text-[var(--accent)]">Coming Soon</span>
                     <span className="text-[8px] font-sans font-extrabold tracking-[0.25em] uppercase mt-1 text-[var(--dark)]">

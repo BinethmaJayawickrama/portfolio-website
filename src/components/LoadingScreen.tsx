@@ -108,13 +108,13 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
       {/* Top Curtain Panel (Warm Light Champagne Pearl #fbf5f2) */}
       <div
         ref={topCurtainRef}
-        className="absolute top-0 left-0 w-full h-1/2 bg-[#fbf5f2] border-b border-[#e8d0cb]/40 pointer-events-auto"
+        className="absolute top-0 left-0 w-full h-1/2 bg-[var(--bg)] border-b border-[var(--border)]/40 pointer-events-auto"
       />
 
       {/* Bottom Curtain Panel */}
       <div
         ref={bottomCurtainRef}
-        className="absolute bottom-0 left-0 w-full h-1/2 bg-[#fbf5f2] border-t border-[#e8d0cb]/40 pointer-events-auto"
+        className="absolute bottom-0 left-0 w-full h-1/2 bg-[var(--bg)] border-t border-[var(--border)]/40 pointer-events-auto"
       />
 
       {/* Center content wrapper */}
@@ -138,7 +138,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
               cx="50"
               cy="50"
               r="45"
-              stroke="#d25a47"
+              stroke="var(--accent)"
               strokeWidth="1.5"
               strokeLinecap="round"
             />
@@ -147,7 +147,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
             <path
               ref={pathBRef}
               d="M 38 30 L 38 70 M 38 30 H 48 C 55 30, 55 48, 38 48 H 45 C 53 48, 53 70, 38 70 Z"
-              stroke="#e8d0cb"
+              stroke="var(--dark)"
               strokeWidth="2.5"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -157,7 +157,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
             <path
               ref={pathJRef}
               d="M 54 30 H 64 M 59 30 L 59 62 C 59 70, 48 70, 48 62"
-              stroke="#7e2d20"
+              stroke="var(--accent)"
               strokeWidth="2.5"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -165,18 +165,18 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
           </svg>
 
           {/* Progress Bar Container */}
-          <div className="w-48 h-[2px] bg-[#f6e6e1] rounded-full overflow-hidden mb-6 relative">
+          <div className="w-48 h-[2px] bg-[var(--surface)] rounded-full overflow-hidden mb-6 relative">
             <div
               ref={progressRef}
-              className="absolute top-0 left-0 h-full w-full bg-[#d25a47] origin-left scale-x-0"
+              className="absolute top-0 left-0 h-full w-full bg-[var(--accent)] origin-left scale-x-0"
             />
           </div>
 
           {/* Text Labels */}
-          <h1 className="font-display font-light text-2xl tracking-[0.25em] text-[#7e2d20] uppercase select-none">
+          <h1 className="font-display font-light text-2xl tracking-[0.25em] text-[var(--dark)] uppercase select-none">
             Binethma Jayawickrama
           </h1>
-          <p className="text-[9px] font-sans tracking-[0.4em] text-[#8e7a76] uppercase mt-2 select-none">
+          <p className="text-[9px] font-sans tracking-[0.4em] text-[var(--muted)] uppercase mt-2 select-none">
             Creative Developer Portfolio
           </p>
         </div>
