@@ -64,6 +64,9 @@ export default function Home() {
       syncTouch: true,
     });
 
+    // Expose lenis instance globally for Navbar scroll animations
+    (window as any).lenis = lenis;
+
     lenis.on("scroll", ScrollTrigger.update);
 
     // Sync GSAP ticker with Lenis
@@ -89,6 +92,7 @@ export default function Home() {
       clearTimeout(timer);
       window.removeEventListener("resize", handleResize);
       gsap.ticker.remove(tickerCallback);
+      (window as any).lenis = undefined;
       lenis.destroy();
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };

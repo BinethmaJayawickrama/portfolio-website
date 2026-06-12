@@ -21,6 +21,7 @@ interface NavbarProps {
 export default function Navbar({ theme, toggleTheme }: NavbarProps) {
   const [activeSection, setActiveSection] = useState("home");
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
+  const [hasScrolled, setHasScrolled] = useState(false);
 
   useEffect(() => {
     let ticking = false;
@@ -28,6 +29,9 @@ export default function Navbar({ theme, toggleTheme }: NavbarProps) {
     const handleScroll = () => {
       if (!ticking) {
         window.requestAnimationFrame(() => {
+          // Check if user has scrolled down
+          setHasScrolled(window.scrollY > 20);
+
           // 1. Check if we are at the bottom of the page (lock to contact)
           const isAtBottom = (window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 120;
           if (isAtBottom) {
@@ -69,21 +73,32 @@ export default function Navbar({ theme, toggleTheme }: NavbarProps) {
   }, []);
 
   const scrollToSection = (id: string) => {
+    const lenis = (window as any).lenis;
     if (id === "home") {
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      if (lenis) {
+        lenis.scrollTo(0, { duration: 1.2 });
+      } else {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
       setActiveSection("home");
       return;
     }
 
     const el = document.getElementById(id);
     if (el) {
-      el.scrollIntoView({ behavior: "smooth" });
+      if (lenis) {
+        lenis.scrollTo(`#${id}`, { duration: 1.2 });
+      } else {
+        el.scrollIntoView({ behavior: "smooth" });
+      }
       setActiveSection(id);
     }
   };
 
   return (
-    <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-[45] flex items-center gap-3 sm:gap-4.5 px-4 sm:px-5.5 py-2.5 sm:py-3 rounded-full bg-[var(--nav-bg)] backdrop-blur-[20px] border border-[var(--nav-border)] shadow-[0_10px_30px_rgba(0,0,0,0.08)] transition-all duration-300">
+    <nav
+      className="fixed top-6 left-1/2 -translate-x-1/2 z-[45] flex items-center rounded-full bg-neutral-900/60 backdrop-blur-md border border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.25)] transition-all duration-300 premium-navbar-capsule"
+    >
       {navItems.map((item) => {
         const Icon = item.icon;
         const isActive = activeSection === item.id;
@@ -96,13 +111,20 @@ export default function Navbar({ theme, toggleTheme }: NavbarProps) {
           >
             <button
               onClick={() => scrollToSection(item.id)}
-              className={`p-2 rounded-full transition-all duration-300 cursor-pointer focus:outline-none relative flex items-center justify-center ${
+              className={`p-2.5 rounded-full transition-all duration-300 cursor-pointer focus:outline-none relative flex items-center justify-center ${
                 isActive
-                  ? "text-[var(--accent)] bg-[var(--surface)] scale-110 shadow-xs"
-                  : "text-[var(--muted)] hover:text-[var(--dark)] hover:bg-[var(--surface)]/40"
+                  ? "text-[var(--accent)] scale-110 font-bold"
+                  : "text-neutral-400 hover:text-white"
               }`}
               aria-label={item.label}
             >
+              {isActive && (
+                <motion.div
+                  layoutId="activeNavIndicator"
+                  className="absolute inset-0 bg-white/10 rounded-full -z-10 shadow-xs"
+                  transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                />
+              )}
               <Icon className="w-4 h-4 sm:w-[17px] sm:h-[17px] stroke-[1.8]" />
             </button>
 
@@ -114,7 +136,7 @@ export default function Navbar({ theme, toggleTheme }: NavbarProps) {
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: 10, scale: 0.95 }}
                   transition={{ duration: 0.15, ease: "easeOut" }}
-                  className="absolute top-13 px-2.5 py-1.5 rounded-md bg-[var(--dark)] dark:bg-[var(--accent-deep)] text-[var(--bg)] text-[9px] font-sans font-extrabold tracking-widest uppercase shadow-md pointer-events-none whitespace-nowrap z-50 border border-[var(--border)]/10"
+                  className="absolute top-14 px-2.5 py-1.5 rounded-md bg-neutral-950 text-white text-[9px] font-sans font-extrabold tracking-widest uppercase shadow-md pointer-events-none whitespace-nowrap z-50 border border-white/10"
                 >
                   {item.label}
                 </motion.div>
@@ -125,7 +147,7 @@ export default function Navbar({ theme, toggleTheme }: NavbarProps) {
       })}
 
       {/* Vertical Spacer Divider */}
-      <div className="w-[1px] h-5.5 bg-[var(--border)]/65 self-center mx-0.5" />
+      <div className="w-[1px] h-5.5 bg-white/15 self-center mx-0.5" />
 
       {/* Theme Toggle Element */}
       <div
@@ -135,14 +157,22 @@ export default function Navbar({ theme, toggleTheme }: NavbarProps) {
       >
         <button
           onClick={toggleTheme}
-          className="p-2 rounded-full text-[var(--muted)] hover:text-[var(--dark)] hover:bg-[var(--surface)]/40 transition-all duration-300 cursor-pointer focus:outline-none flex items-center justify-center"
+          className="p-2.5 rounded-full text-neutral-400 hover:text-white hover:bg-white/5 transition-all duration-300 cursor-pointer focus:outline-none flex items-center justify-center active:scale-95 duration-200"
           aria-label="Toggle Theme"
         >
-          {theme === "dark" ? (
-            <Sun className="w-4 h-4 sm:w-[17px] sm:h-[17px] text-amber-400 stroke-[1.8]" />
-          ) : (
-            <Moon className="w-4 h-4 sm:w-[17px] sm:h-[17px] text-[var(--accent)] stroke-[1.8]" />
-          )}
+          <motion.div
+            key={theme}
+            initial={{ rotate: -90, opacity: 0 }}
+            animate={{ rotate: 0, opacity: 1 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            className="flex items-center justify-center"
+          >
+            {theme === "dark" ? (
+              <Sun className="w-4 h-4 sm:w-[17px] sm:h-[17px] text-amber-400 stroke-[1.8]" />
+            ) : (
+              <Moon className="w-4 h-4 sm:w-[17px] sm:h-[17px] text-amber-300 stroke-[1.8]" />
+            )}
+          </motion.div>
         </button>
 
         {/* Tooltip */}
@@ -153,7 +183,7 @@ export default function Navbar({ theme, toggleTheme }: NavbarProps) {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 10, scale: 0.95 }}
               transition={{ duration: 0.15, ease: "easeOut" }}
-              className="absolute top-13 px-2.5 py-1.5 rounded-md bg-[var(--dark)] dark:bg-[var(--accent-deep)] text-[var(--bg)] text-[9px] font-sans font-extrabold tracking-widest uppercase shadow-md pointer-events-none whitespace-nowrap z-50 border border-[var(--border)]/10"
+              className="absolute top-14 px-2.5 py-1.5 rounded-md bg-neutral-950 text-white text-[9px] font-sans font-extrabold tracking-widest uppercase shadow-md pointer-events-none whitespace-nowrap z-50 border border-white/10"
             >
               {theme === "dark" ? "Light Mode" : "Dark Mode"}
             </motion.div>

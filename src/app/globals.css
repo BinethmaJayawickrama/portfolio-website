@@ -431,4 +431,17 @@ html.lenis, html.lenis body {
   pointer-events: none;
 }
 
+/* Enforce premium responsive spacing for the floating navbar island */
+.premium-navbar-capsule {
+  padding: 14px 32px !important;
+  gap: 16px !important;
+}
+
+@media (min-width: 640px) {
+  .premium-navbar-capsule {
+    padding: 18px 48px !important;
+    gap: 24px !important;
+  }
+}
+
 
