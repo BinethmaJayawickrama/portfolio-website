@@ -208,7 +208,7 @@ export default function Projects() {
       <div className="w-full space-y-12 projects-trigger">
         
         {/* Typographic Heading */}
-        <div className="flex flex-col items-start gap-1">
+        <div className="flex flex-col items-center lg:items-start text-center lg:text-left gap-1">
           <h2 className="font-display font-black text-5xl sm:text-6xl md:text-[5.4rem] tracking-tight leading-[0.95] uppercase">
             RECENT
           </h2>

@@ -58,7 +58,7 @@ export default function Contact() {
         <div className="flex flex-col items-center justify-center gap-16">
           
           {/* TOP: Typography */}
-          <div className="contact-reveal-element flex flex-col items-start justify-start gap-0 text-left w-full">
+          <div className="contact-reveal-element flex flex-col items-center lg:items-start justify-center lg:justify-start gap-0 text-center lg:text-left w-full">
             <h2 className="font-display font-black text-6xl sm:text-7xl lg:text-[7rem] tracking-tight leading-[0.85] uppercase">
               LET'S
             </h2>

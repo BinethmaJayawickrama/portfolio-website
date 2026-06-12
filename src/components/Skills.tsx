@@ -129,7 +129,7 @@ export default function Skills() {
       <div className="w-full space-y-16 skills-section-trigger max-w-6xl mx-auto px-4 sm:px-8">
         
         {/* Typographic Heading */}
-        <div className="flex flex-col items-start gap-1 pl-6 sm:pl-10">
+        <div className="flex flex-col items-center lg:items-start text-center lg:text-left gap-1 pl-0 lg:pl-10">
           <h2 className="font-display font-black text-5xl sm:text-6xl md:text-[5.4rem] tracking-tight leading-[0.95] uppercase">
             TECHNOLOGIES
           </h2>
