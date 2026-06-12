@@ -23,28 +23,49 @@ export default function Navbar({ theme, toggleTheme }: NavbarProps) {
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
 
   useEffect(() => {
-    const observerOptions = {
-      root: null,
-      rootMargin: "-30% 0px -30% 0px",
-      threshold: 0.05,
+    let ticking = false;
+
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          // 1. Check if we are at the bottom of the page (lock to contact)
+          const isAtBottom = (window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 120;
+          if (isAtBottom) {
+            setActiveSection("contact");
+            ticking = false;
+            return;
+          }
+
+          // 2. Otherwise, find the current active section based on viewport position
+          const triggerPoint = window.innerHeight * 0.35; // 35% from the top of the viewport
+          let currentSection = "home";
+
+          for (const item of navItems) {
+            const el = document.getElementById(item.id);
+            if (el) {
+              const rect = el.getBoundingClientRect();
+              // If the section top is above the trigger point, it is the active candidate
+              if (rect.top <= triggerPoint) {
+                currentSection = item.id;
+              }
+            }
+          }
+
+          setActiveSection(currentSection);
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
 
-    const handleIntersection = (entries: IntersectionObserverEntry[]) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setActiveSection(entry.target.id);
-        }
-      });
+    // Run once on mount to set the initial active section correctly
+    handleScroll();
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
     };
-
-    const observer = new IntersectionObserver(handleIntersection, observerOptions);
-
-    navItems.forEach((item) => {
-      const el = document.getElementById(item.id);
-      if (el) observer.observe(el);
-    });
-
-    return () => observer.disconnect();
   }, []);
 
   const scrollToSection = (id: string) => {
