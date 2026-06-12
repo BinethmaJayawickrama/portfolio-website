@@ -129,7 +129,7 @@ export default function Home() {
             <main className="main-layout w-[92%] max-w-5xl px-0 pb-28 flex flex-col lg:flex-row gap-12 lg:gap-10 xl:gap-16 relative z-10">
               
               {/* Sticky Profile Card (Left Sidebar) */}
-              <div className="w-full max-w-[320px] mx-auto lg:mx-0 lg:sticky lg:top-[120px] lg:self-start h-fit shrink-0 z-20">
+              <div className="w-full max-w-[320px] mx-auto self-center lg:mx-0 lg:sticky lg:top-[120px] lg:self-start h-fit shrink-0 z-20">
                 <ProfileCard />
               </div>
 

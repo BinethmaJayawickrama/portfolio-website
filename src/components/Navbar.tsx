@@ -111,7 +111,7 @@ export default function Navbar({ theme, toggleTheme }: NavbarProps) {
           >
             <button
               onClick={() => scrollToSection(item.id)}
-              className={`p-2.5 rounded-full transition-all duration-300 cursor-pointer focus:outline-none relative flex items-center justify-center ${
+              className={`p-2 sm:p-2.5 rounded-full transition-all duration-300 cursor-pointer focus:outline-none relative flex items-center justify-center ${
                 isActive
                   ? "text-[var(--accent)] scale-110 font-bold"
                   : "text-neutral-400 hover:text-white"
@@ -157,7 +157,7 @@ export default function Navbar({ theme, toggleTheme }: NavbarProps) {
       >
         <button
           onClick={toggleTheme}
-          className="p-2.5 rounded-full text-neutral-400 hover:text-white hover:bg-white/5 transition-all duration-300 cursor-pointer focus:outline-none flex items-center justify-center active:scale-95 duration-200"
+          className="p-2 sm:p-2.5 rounded-full text-neutral-400 hover:text-white hover:bg-white/5 transition-all duration-300 cursor-pointer focus:outline-none flex items-center justify-center active:scale-95 duration-200"
           aria-label="Toggle Theme"
         >
           <motion.div
