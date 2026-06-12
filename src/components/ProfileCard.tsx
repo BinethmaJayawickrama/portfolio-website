@@ -32,7 +32,7 @@ export default function ProfileCard() {
       </div>
 
       {/* ── Divider ── */}
-      <div className="w-[calc(100%-56px)] h-px bg-[var(--border)] transition-colors duration-500" />
+      <div className="hidden lg:block w-[calc(100%-56px)] h-px bg-[var(--border)] transition-colors duration-500" />
 
       {/* ── Name & Title ── */}
       <div className="text-center w-full px-6 pt-8 pb-6 lg:pb-14 flex flex-col items-center gap-4">
