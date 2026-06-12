@@ -35,7 +35,7 @@ export default function ProfileCard() {
       <div className="w-[calc(100%-56px)] h-px bg-[var(--border)] transition-colors duration-500" />
 
       {/* ── Name & Title ── */}
-      <div className="text-center w-full px-6 pt-8 pb-14 flex flex-col items-center gap-4">
+      <div className="text-center w-full px-6 pt-8 pb-6 lg:pb-14 flex flex-col items-center gap-4">
         <h2
           className="font-display font-bold tracking-tight text-[var(--dark)] leading-[1.1] transition-colors duration-500"
           style={{ fontSize: "clamp(26px, 5vw, 32px)" }}
@@ -43,18 +43,17 @@ export default function ProfileCard() {
           Binethma<br />Jayawickrama
         </h2>
 
-        <p className="text-[12px] font-mono tracking-widest uppercase text-[var(--muted)] transition-colors duration-500">
+        <p className="hidden lg:block text-[12px] font-mono tracking-widest uppercase text-[var(--muted)] transition-colors duration-500">
           Full-Stack Developer
         </p>
       </div>
 
       {/* ── Spacer ── */}
-      <div className="h-16 w-full" />
+      <div className="h-0 lg:h-16 w-full" />
 
       {/* ── Social Link Dock ── */}
       <div 
-        className="flex items-center gap-3 w-full justify-center"
-        style={{ paddingTop: "36px", paddingBottom: "80px" }}
+        className="flex items-center gap-3 w-full justify-center pt-4 pb-6 lg:pt-9 lg:pb-[80px]"
       >
         {[
           { href: "https://github.com/ADORIX000", icon: <Github className="w-[19px] h-[19px]" />, label: "GitHub" },
