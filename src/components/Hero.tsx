@@ -9,15 +9,9 @@ export default function Hero() {
     const tl = gsap.timeline({ delay: 0.6 });
 
     tl.fromTo(
-      ".hero-badge",
-      { opacity: 0, y: -12 },
-      { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }
-    );
-    tl.fromTo(
       ".hero-heading-line",
       { opacity: 0, y: 50 },
-      { opacity: 1, y: 0, duration: 0.7, stagger: 0.12, ease: "power3.out" },
-      "-=0.2"
+      { opacity: 1, y: 0, duration: 0.7, stagger: 0.12, ease: "power3.out" }
     );
     tl.fromTo(
       ".hero-text-fade",
@@ -30,12 +24,6 @@ export default function Hero() {
       { opacity: 0, y: 12 },
       { opacity: 1, y: 0, duration: 0.5, stagger: 0.08, ease: "power2.out" },
       "-=0.3"
-    );
-    tl.fromTo(
-      ".hero-tag",
-      { opacity: 0, scale: 0.92 },
-      { opacity: 1, scale: 1, duration: 0.4, stagger: 0.06, ease: "power2.out" },
-      "-=0.2"
     );
   }, []);
 

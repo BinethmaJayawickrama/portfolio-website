@@ -268,7 +268,7 @@ export default function Projects() {
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.96, y: 24 }}
                 transition={{ type: "spring", damping: 30, stiffness: 280 }}
-                className="relative w-[95vw] max-w-5xl h-[95vh] bg-[var(--bg)] border border-[var(--border)] rounded-2xl shadow-2xl z-10 flex flex-col overflow-hidden"
+                className="relative w-[88vw] sm:w-[85vw] lg:w-[75vw] max-w-4xl h-[80vh] lg:h-[78vh] bg-[var(--bg)] border border-[var(--border)] rounded-2xl shadow-2xl z-10 flex flex-col overflow-hidden"
               >
                 {/* Close Button at top right corner of the modal */}
                 <button
@@ -280,18 +280,18 @@ export default function Projects() {
                 </button>
 
                 {/* ── Header ── */}
-                <div className="relative px-10 sm:px-16 pt-12 pb-20 shrink-0 flex items-center justify-center">
+                <div className="relative px-10 sm:px-16 pt-24 sm:pt-32 pb-12 sm:pb-16 shrink-0 flex items-center justify-center">
                   <h4 className="font-display font-black text-3xl sm:text-4xl tracking-tight uppercase text-[var(--dark)] text-center max-w-[80%]">
                     {selectedProject.title}
                   </h4>
                 </div>
 
                 {/* ── Scrollable body ── */}
-                <div className="overflow-y-auto flex-1 px-12 sm:px-24 pt-40 pb-16 flex flex-col gap-8 sm:gap-10 lg:gap-12">
+                <div className="overflow-y-auto flex-1 px-6 sm:px-12 md:px-20 pt-40 pb-16 flex flex-col gap-8 sm:gap-10 lg:gap-12">
 
                   {/* Overview */}
-                  <div className="space-y-5 flex flex-col items-center px-4 sm:px-8">
-                    <p className="text-[var(--dark)] text-[16px] sm:text-[17px] font-light leading-[1.8] opacity-85 text-justify max-w-3xl">
+                  <div className="space-y-5 flex flex-col items-center px-4 sm:px-8 w-full">
+                    <p className="text-[var(--dark)] text-[14px] sm:text-[15px] font-light leading-[1.65] opacity-85 text-justify max-w-3xl px-2 sm:px-6">
                       {selectedProject.longDescription}
                     </p>
                   </div>
@@ -316,7 +316,7 @@ export default function Projects() {
 
 
                   {/* Tech Stack */}
-                  <div className="space-y-8 flex flex-col items-center">
+                  <div className="flex flex-col items-center gap-6 sm:gap-8">
                     <div className="inline-flex items-center justify-center px-5 py-2 rounded-full bg-[var(--surface)] border border-[var(--border)] shadow-sm">
                       <h5 className="text-[12px] font-sans font-extrabold tracking-[0.2em] uppercase text-[var(--dark)] text-center">
                         Technologies
