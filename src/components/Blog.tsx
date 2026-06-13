@@ -57,7 +57,7 @@ export default function Blog() {
   return (
     <section
       id="blog"
-      className="py-12 sm:py-16 bg-transparent text-[var(--dark)] select-none"
+      className="pt-12 pb-0 sm:pt-16 sm:pb-0 bg-transparent text-[var(--dark)] select-none"
     >
       <div className="w-full flex flex-col gap-8 sm:gap-12 lg:gap-6 blog-section-trigger">
         

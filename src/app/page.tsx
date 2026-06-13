@@ -139,8 +139,10 @@ export default function Home() {
               <Projects />
 
               <Skills />
-              <Blog />
-              <Contact />
+              <div className="flex flex-col gap-6 sm:gap-8 lg:gap-10">
+                <Blog />
+                <Contact />
+              </div>
             </div>
 
           </main>

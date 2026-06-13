@@ -53,7 +53,7 @@ export default function Contact() {
       {/* Background Radial Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[var(--accent)]/5 blur-[120px] rounded-full pointer-events-none z-0" />
 
-      <section id="contact" className="pt-12 pb-20 sm:pt-24 sm:pb-32 relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-0 text-[var(--dark)]">
+      <section id="contact" className="pt-2 pb-20 sm:pt-4 sm:pb-32 relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-0 text-[var(--dark)]">
         
         <div className="flex flex-col items-center justify-center gap-16">
           
