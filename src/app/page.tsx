@@ -148,7 +148,7 @@ export default function Home() {
           </main>
 
           {/* Spacer to guarantee vertical padding/separation between the main layout and footer */}
-          <div style={{ height: "100px" }} className="w-full block" />
+          <div className="w-full h-10 sm:h-24 block" />
 
           {/* Footer placed at the bottom, centered relative to the webpage */}
           <footer 
