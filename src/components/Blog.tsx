@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ArrowUpRight, Calendar, Clock } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { gsap } from "gsap";
 
@@ -15,22 +15,6 @@ interface Post {
 }
 
 const articlesData: Post[] = [
-  {
-    id: 1,
-    category: "Web Dev",
-    title: "Why I chose Next.js App Router for my e-commerce project",
-    excerpt: "Exploring the trade-offs between the Pages Router and App Router, and why server components changed how I think about data fetching.",
-    date: "May 2026",
-    readTime: "5 min read",
-  },
-  {
-    id: 2,
-    category: "AI / Computer Vision",
-    title: "Building Adorix: What I learned making an AI kiosk from scratch",
-    excerpt: "From face detection pipelines to WebSocket streaming — the real challenges behind building a real-time AI retail experience.",
-    date: "April 2026",
-    readTime: "8 min read",
-  },
   {
     id: 3,
     category: "IoT",
@@ -73,9 +57,9 @@ export default function Blog() {
   return (
     <section
       id="blog"
-      className="py-8 bg-transparent text-[var(--dark)] select-none"
+      className="py-12 sm:py-16 bg-transparent text-[var(--dark)] select-none"
     >
-      <div className="w-full space-y-12 blog-section-trigger">
+      <div className="w-full flex flex-col gap-8 sm:gap-12 lg:gap-6 blog-section-trigger">
         
         {/* Section Heading */}
         <div className="flex flex-row flex-wrap justify-center lg:justify-start items-center lg:items-end gap-3 sm:gap-4 md:gap-5">
@@ -88,8 +72,8 @@ export default function Blog() {
         </div>
 
         {/* Blogs List Rows */}
-        <div className="flex flex-col w-full border-t border-[var(--border)] mt-8">
-          {articlesData.map((post) => (
+        <div className="flex flex-col w-full border-t border-[var(--border)]">
+          {articlesData.map((post, idx) => (
             <div
               key={post.id}
               onClick={() => handleCardClick(post.id)}
@@ -113,34 +97,19 @@ export default function Blog() {
                 )}
               </AnimatePresence>
 
-              {/* Left Side: Arrow and Details */}
+              {/* Left Side: Number and Details */}
               <div className="flex items-start gap-4 flex-1 min-w-0">
-                <div className="w-8 h-8 rounded-full border border-[var(--border)] flex items-center justify-center text-[var(--muted)] group-hover:text-[var(--accent)] group-hover:border-[var(--accent)] group-hover:rotate-45 transition-all duration-300 shrink-0 mt-1">
-                  <ArrowUpRight className="w-3.5 h-3.5" />
-                </div>
+                <span className="font-display font-black text-xl sm:text-2xl text-[var(--accent)] shrink-0 mt-0.5 sm:mt-0">
+                  {idx + 1}.
+                </span>
                 
                 <div className="flex-1 min-w-0 text-left space-y-1">
-                  <span className="text-[9px] font-sans font-extrabold tracking-widest text-[var(--muted)] uppercase leading-none">
-                    {post.category}
-                  </span>
                   <h3 className="font-display font-semibold text-lg sm:text-xl italic text-[var(--dark)] leading-tight group-hover:text-[var(--accent)] transition-colors">
                     {post.title}
                   </h3>
                   <p className="text-xs sm:text-[13px] font-sans font-light text-[var(--muted)] dark:text-[var(--muted-light)] leading-relaxed line-clamp-2 pt-1">
                     {post.excerpt}
                   </p>
-                </div>
-              </div>
-
-              {/* Right Side: Date & Read Time */}
-              <div className="flex md:flex-col items-center md:items-end gap-3 md:gap-1.5 shrink-0 pl-12 md:pl-0 text-[10px] font-sans font-semibold text-[var(--muted)] dark:text-[var(--muted-light)] uppercase tracking-wider">
-                <div className="flex items-center gap-1">
-                  <Calendar className="w-3.5 h-3.5 text-[var(--accent)]" />
-                  <span>{post.date}</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <Clock className="w-3.5 h-3.5 text-[var(--accent)]" />
-                  <span>{post.readTime}</span>
                 </div>
               </div>
 
