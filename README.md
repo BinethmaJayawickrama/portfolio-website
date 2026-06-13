@@ -1,36 +1,97 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 💻 Binethma Jayawickrama — Personal Portfolio
 
-## Getting Started
+A premium, interactive, and fully responsive developer portfolio built with Next.js, React, Tailwind CSS, GSAP, and Resend. Designed to showcase modern web engineering projects, technical expertise, and extracurricular achievements with a sleek glassmorphic UI.
 
-First, run the development server:
+---
+
+## 🚀 Key Features
+
+- **🖥️ Premium Glassmorphic UI**: Sleek dark and light styling, modern typography, custom magnetic cursors, and subtle micro-animations for an elevated user experience.
+- **📱 Fully Responsive Design**: Carefully optimized layouts for desktop, tablet, and mobile breakpoints (including splash screen adjustments and spacing optimization).
+- **🎨 Interactive Animations**: Smooth page transitions, hover effects, and section scroll-reveals powered by **GSAP (GreenSock)** and a custom interactive **HTML5 Canvas particle background**.
+- **💼 Project Showcase & Detail Modals**: Highly customizable project list featuring filters, technical tag overlays, and immersive detail modals for key feature walk-throughs.
+- **✉️ Automated Serverless Contact**: A fully functional, type-safe contact form integrated with the **Resend Email API** that routes user messages directly to `binethmad@gmail.com` without requiring an external database backend.
+
+---
+
+## 🛠️ Tech Stack
+
+- **Core Framework**: [Next.js](https://nextjs.org/) (App Router & Server Actions / API Routes)
+- **Library**: React 19 & TypeScript
+- **Styling**: Tailwind CSS & CSS Variables for robust color token control
+- **Animations**: GSAP (GreenSock Animation Platform)
+- **Icons**: Lucide React
+- **Email Delivery**: Resend SDK
+
+---
+
+## 📂 Codebase Structure
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+├── src
+│   ├── app
+│   │   ├── api
+│   │   │   └── contact
+│   │   │       └── route.ts       # Serverless endpoint for Resend Email dispatch
+│   │   ├── layout.tsx             # Root layout and theme wrapper
+│   │   └── page.tsx               # Portfolio main index page assembly
+│   ├── components
+│   │   ├── About.tsx              # Professional bio & philosophy
+│   │   ├── Blog.tsx               # Blog articles section (index indicators)
+│   │   ├── CanvasBackground.tsx   # Canvas-based particle background rendering
+│   │   ├── Contact.tsx            # Contact form + Resend endpoint handler
+│   │   ├── Hero.tsx               # Splash intro, profile headings & CTAs
+│   │   ├── LoadingScreen.tsx      # Responsive loading splash sequence
+│   │   ├── Navbar.tsx             # Interactive header dock & navigation
+│   │   ├── ProfileCard.tsx        # Floating card housing picture & social link actions
+│   │   ├── Projects.tsx           # Project grid list & project details modal
+│   │   └── Skills.tsx             # Professional stack & competence visualization
+└── public
+    ├── cv.pdf                     # Downloadable Curriculum Vitae (Resume)
+    └── profile_new.jpg            # Featured avatar asset
 ```
 
+---
+
+## ⚙️ Local Development Setup
+
+To run this project locally, make sure you have [Node.js](https://nodejs.org/) installed, and follow these steps:
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/BinethmaJayawickrama/portfolio-neww.git
+cd portfolio-neww
+```
+
+### 2. Install Dependencies
+```bash
+npm install
+```
+
+### 3. Configure Environmental Variables
+Create a `.env.local` file in the root directory and add your Resend API Key:
+```env
+RESEND_API_KEY=your_resend_api_key_here
+```
+
+### 4. Run the Development Server
+```bash
+npm run dev
+```
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 5. Build for Production
+To test build correctness and optimize assets for deployment:
+```bash
+npm run build
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## ✉️ Contact
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+For inquiries or project collaboration, feel free to reach out via:
+- **Email**: [binethmad@gmail.com](mailto:binethmad@gmail.com)
+- **LinkedIn**: [binethma](https://www.linkedin.com/in/binethma/)
+- **GitHub**: [BinethmaJayawickrama](https://github.com/BinethmaJayawickrama)
+- **Instagram**: [coffeforurhed](https://www.instagram.com/coffeforurhed?igsh=MTVxcmVoeGhubDcw)
