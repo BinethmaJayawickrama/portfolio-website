@@ -173,12 +173,9 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
           </div>
 
           {/* Text Labels */}
-          <h1 className="font-display font-light text-2xl tracking-[0.25em] text-[var(--dark)] uppercase select-none">
+          <h1 className="hidden sm:block font-display font-light text-2xl tracking-[0.25em] text-[var(--dark)] uppercase select-none">
             Binethma Jayawickrama
           </h1>
-          <p className="text-[9px] font-sans tracking-[0.4em] text-[var(--muted)] uppercase mt-2 select-none">
-            Creative Developer Portfolio
-          </p>
         </div>
       </div>
     </div>
