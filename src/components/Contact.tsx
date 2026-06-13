@@ -32,19 +32,37 @@ export default function Contact() {
     );
   }, []);
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formState.name || !formState.email || !formState.subject || !formState.message) return;
 
     setIsSubmitting(true);
-    setTimeout(() => {
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formState),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setIsSent(true);
+        setFormState({ name: "", email: "", subject: "", message: "" });
+        setTimeout(() => {
+          setIsSent(false);
+        }, 5000);
+      } else {
+        alert(data.error || "Failed to send message. Please try again.");
+      }
+    } catch (err) {
+      console.error("Error submitting contact form:", err);
+      alert("Something went wrong. Please check your network connection and try again.");
+    } finally {
       setIsSubmitting(false);
-      setIsSent(true);
-      setFormState({ name: "", email: "", subject: "", message: "" });
-      setTimeout(() => {
-        setIsSent(false);
-      }, 3000);
-    }, 1500);
+    }
   };
 
   return (
