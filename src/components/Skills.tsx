@@ -144,10 +144,10 @@ export default function Skills() {
               <div
                 key={category.id}
                 onClick={() => toggleCard(category.id)}
-                className={`skill-row-anim group relative h-[100px] sm:h-[120px] rounded-[24px] overflow-hidden cursor-pointer transition-all duration-500 border ${
+                className={`skill-row-anim group relative w-full flex items-center justify-center rounded-[24px] overflow-hidden cursor-pointer transition-all duration-500 border ${
                   isActive 
-                    ? "bg-[var(--surface)]/80 border-[var(--accent)] shadow-xl" 
-                    : "bg-[var(--white)]/60 dark:bg-[var(--white)]/5 border-[var(--border)] hover:border-[var(--accent)] hover:shadow-lg"
+                    ? "min-h-[180px] sm:min-h-[220px] lg:min-h-[120px] bg-[var(--surface)]/80 border-[var(--accent)] shadow-xl" 
+                    : "min-h-[100px] sm:min-h-[120px] bg-[var(--white)]/60 dark:bg-[var(--white)]/5 border-[var(--border)] hover:border-[var(--accent)] hover:shadow-lg"
                 }`}
               >
                 <AnimatePresence initial={false} mode="wait">
@@ -173,9 +173,9 @@ export default function Skills() {
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.98 }}
                       transition={{ duration: 0.3 }}
-                      className="absolute inset-0 flex items-center justify-center px-8 bg-[var(--surface)]"
+                      className="relative w-full min-h-full flex flex-col items-center justify-center px-4 sm:px-8 py-6 sm:py-8 bg-[var(--surface)]"
                     >
-                      <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-10">
+                      <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-10 max-w-[240px] sm:max-w-[320px] lg:max-w-none">
                         {category.skills.map((skill, idx) => (
                           <div 
                             key={idx} 
