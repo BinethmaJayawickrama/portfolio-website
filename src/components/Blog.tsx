@@ -16,6 +16,14 @@ interface Post {
 
 const articlesData: Post[] = [
   {
+    id: 2,
+    category: "AI / Computer Vision",
+    title: "Building Adorix: What I learned making an AI kiosk from scratch",
+    excerpt: "From face detection pipelines to WebSocket streaming — the real challenges behind building a real-time AI retail experience.",
+    date: "April 2026",
+    readTime: "8 min read",
+  },
+  {
     id: 3,
     category: "IoT",
     title: "Connecting cows to the cloud: the Smart Tail Pod journey",
