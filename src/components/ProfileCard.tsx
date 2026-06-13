@@ -56,10 +56,10 @@ export default function ProfileCard() {
         className="flex items-center gap-3 w-full justify-center pt-4 pb-6 lg:pt-9 lg:pb-[80px]"
       >
         {[
-          { href: "https://github.com/ADORIX000", icon: <Github className="w-[19px] h-[19px]" />, label: "GitHub" },
-          { href: "https://www.linkedin.com/in/binethma-jayawickrama", icon: <Linkedin className="w-[19px] h-[19px]" />, label: "LinkedIn" },
+          { href: "https://github.com/BinethmaJayawickrama", icon: <Github className="w-[19px] h-[19px]" />, label: "GitHub" },
+          { href: "https://www.linkedin.com/in/binethma/", icon: <Linkedin className="w-[19px] h-[19px]" />, label: "LinkedIn" },
           { href: "mailto:binethmad@gmail.com", icon: <Mail className="w-[19px] h-[19px]" />, label: "Email" },
-          { href: "https://instagram.com/", icon: <Instagram className="w-[19px] h-[19px]" />, label: "Instagram" },
+          { href: "https://www.instagram.com/coffeforurhed?igsh=MTVxcmVoeGhubDcw", icon: <Instagram className="w-[19px] h-[19px]" />, label: "Instagram" },
         ].map(({ href, icon, label }) => (
           <a
             key={label}

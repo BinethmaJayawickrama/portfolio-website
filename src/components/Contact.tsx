@@ -280,7 +280,7 @@ export default function Contact() {
 
             {/* Availability */}
             <a 
-              href="https://www.linkedin.com/in/binethma-jayawickrama"
+              href="https://www.linkedin.com/in/binethma/"
               target="_blank"
               rel="noopener noreferrer"
               className="flex flex-row sm:flex-col items-center justify-start sm:justify-center group/item w-full py-4 transition-all duration-300 gap-4 sm:gap-0"

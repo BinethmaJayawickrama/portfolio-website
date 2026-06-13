@@ -81,7 +81,7 @@ const projects: Project[] = [
       "Implemented a Supabase sync backend mapping metrics on customer interest profiles."
     ],
     tech: ["Python", "OpenCV", "FastAPI", "React.js", "Tailwind CSS", "WebSockets", "Supabase"],
-    link: "https://github.com/ADORIX000",
+    link: "https://github.com/BinethmaJayawickrama",
     website: "https://adorixit.com/",
     emoji: "🤖",
     gradient: "from-red-500/20 to-orange-500/20 border-red-500/30",
