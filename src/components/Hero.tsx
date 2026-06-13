@@ -50,7 +50,7 @@ export default function Hero() {
 
 
         {/* ── Bio paragraph ── */}
-        <p className="hero-text-fade text-lg sm:text-xl md:text-2xl leading-relaxed text-[var(--muted)] max-w-[420px] mx-auto lg:mx-0 font-sans font-light text-justify lg:text-left">
+        <p className="hero-text-fade text-lg sm:text-xl md:text-2xl leading-relaxed text-[var(--muted)] max-w-[420px] sm:max-w-none mx-auto lg:mx-0 font-sans font-light text-justify lg:text-left">
           Full-Stack Developer specializing in modern web applications. Passionate about building scalable, user-focused solutions using frontend and backend technologies to create seamless digital experiences.
         </p>
 
