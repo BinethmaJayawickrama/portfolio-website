@@ -20,9 +20,12 @@ const dmSans = DM_Sans({
 
 
 export const metadata: Metadata = {
-  title: "Binethma Jayawickrama | Creative Developer Portfolio",
+  title: "Binethma Jayawickrama",
   description:
     "Personal portfolio website of Binethma Jayawickrama, a dedicated Computer Science undergraduate at IIT Sri Lanka (University of Westminster). Full-Stack Developer, IoT Innovator, and Creative Engineer.",
+  icons: {
+    icon: "/favicon.svg",
+  },
   keywords: [
     "Binethma Jayawickrama",
     "IIT Sri Lanka",

@@ -191,7 +191,7 @@
 }
 
 html {
-  scroll-behavior: initial; /* Lenis handles smooth scrolling */
+  scroll-behavior: smooth;
   background-color: var(--bg);
   color: var(--dark);
 }

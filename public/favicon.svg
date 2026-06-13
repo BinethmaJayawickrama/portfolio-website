@@ -1,0 +1,30 @@
+<svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    circle {
+      stroke: #facc15; /* Default yellow accent for light mode */
+    }
+    path.path-b {
+      stroke: #000000; /* Dark color for light mode */
+    }
+    path.path-j {
+      stroke: #facc15; /* Accent yellow */
+    }
+    @media (prefers-color-scheme: dark) {
+      circle {
+        stroke: #ffd600; /* Dark mode yellow accent */
+      }
+      path.path-b {
+        stroke: #ffffff; /* White for dark mode */
+      }
+      path.path-j {
+        stroke: #ffd600; /* Dark mode yellow accent */
+      }
+    }
+  </style>
+  <!-- Outward Ring -->
+  <circle cx="50" cy="50" r="45" stroke-width="2.5" stroke-linecap="round" />
+  <!-- 'B' Path -->
+  <path class="path-b" d="M 38 30 L 38 70 M 38 30 H 48 C 55 30, 55 48, 38 48 H 45 C 53 48, 53 70, 38 70 Z" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+  <!-- 'J' Path -->
+  <path class="path-j" d="M 54 30 H 64 M 59 30 L 59 62 C 59 70, 48 70, 48 62" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+</svg>

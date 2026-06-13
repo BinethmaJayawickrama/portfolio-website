@@ -59,7 +59,14 @@ export default function Hero() {
 
           {/* Primary — yellow accent fill */}
           <button
-            onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}
+            onClick={() => {
+              const lenis = (window as any).lenis;
+              if (lenis) {
+                lenis.scrollTo("#projects", { duration: 1.2 });
+              } else {
+                document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
+              }
+            }}
             className="hero-cta inline-flex items-center justify-center rounded-md font-sans font-bold text-[15px] bg-[var(--accent)] text-[var(--accent-text)] hover:opacity-90 transition-opacity duration-200 w-full sm:w-auto"
             style={{ padding: "20px 52px" }}
           >
