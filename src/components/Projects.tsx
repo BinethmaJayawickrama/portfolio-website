@@ -295,8 +295,12 @@ export default function Projects() {
                 </button>
 
                 {/* ── Header ── */}
-                <div className="relative px-6 sm:px-16 pt-16 sm:pt-28 pb-8 sm:pb-12 shrink-0 flex items-center justify-center">
-                  <h4 className="font-display font-black text-3xl sm:text-4xl tracking-tight uppercase text-[var(--dark)] text-center max-w-[80%]">
+                <div className="relative px-6 sm:px-16 pt-6 sm:pt-12 pb-6 sm:pb-8 shrink-0 flex items-start justify-center">
+                  <h4 className={`font-display font-black tracking-tight uppercase text-[var(--dark)] text-center max-w-[80%] mt-8 sm:mt-16 ${
+                    selectedProject.title.length > 30
+                      ? "text-lg sm:text-2xl md:text-3xl"
+                      : "text-3xl sm:text-4xl"
+                  }`}>
                     {selectedProject.title}
                   </h4>
                 </div>
