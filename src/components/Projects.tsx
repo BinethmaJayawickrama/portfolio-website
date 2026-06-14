@@ -203,6 +203,21 @@ export default function Projects() {
     );
   }, []);
 
+  useEffect(() => {
+    const lenis = (window as any).lenis;
+    if (selectedProject) {
+      if (lenis) lenis.stop();
+      document.body.style.overflow = "hidden";
+    } else {
+      if (lenis) lenis.start();
+      document.body.style.overflow = "";
+    }
+    return () => {
+      if (lenis) lenis.start();
+      document.body.style.overflow = "";
+    };
+  }, [selectedProject]);
+
   return (
     <section id="projects" className="py-8 bg-transparent text-[var(--dark)] select-none">
       <div className="w-full space-y-12 projects-trigger">
@@ -280,24 +295,27 @@ export default function Projects() {
                 </button>
 
                 {/* ── Header ── */}
-                <div className="relative px-10 sm:px-16 pt-24 sm:pt-32 pb-12 sm:pb-16 shrink-0 flex items-center justify-center">
+                <div className="relative px-6 sm:px-16 pt-16 sm:pt-28 pb-8 sm:pb-12 shrink-0 flex items-center justify-center">
                   <h4 className="font-display font-black text-3xl sm:text-4xl tracking-tight uppercase text-[var(--dark)] text-center max-w-[80%]">
                     {selectedProject.title}
                   </h4>
                 </div>
 
                 {/* ── Scrollable body ── */}
-                <div className="overflow-y-auto flex-1 px-6 sm:px-12 md:px-20 pt-40 pb-16 flex flex-col gap-8 sm:gap-10 lg:gap-12">
+                <div 
+                  data-lenis-prevent
+                  className="overflow-y-auto flex-1 px-4 sm:px-12 md:px-20 pt-4 sm:pt-6 pb-12 sm:pb-16 flex flex-col gap-8 sm:gap-10 lg:gap-12"
+                >
 
                   {/* Overview */}
-                  <div className="space-y-5 flex flex-col items-center px-4 sm:px-8 w-full">
-                    <p className="text-[var(--dark)] text-[14px] sm:text-[15px] font-light leading-[1.65] opacity-85 text-justify max-w-3xl px-2 sm:px-6">
+                  <div className="space-y-5 flex flex-col items-center px-0 sm:px-8 w-full">
+                    <p className="text-[var(--dark)] text-[15px] sm:text-[16px] font-light leading-[1.8] opacity-85 text-justify max-w-3xl px-0 sm:px-6">
                       {selectedProject.longDescription}
                     </p>
                   </div>
 
                   {/* Engineering Challenges */}
-                  <div className="space-y-8 flex flex-col items-start px-4 sm:px-8 max-w-3xl mx-auto w-full">
+                  <div className="space-y-6 sm:space-y-8 flex flex-col items-start px-0 sm:px-8 max-w-3xl mx-auto w-full">
                     <div className="inline-flex items-center justify-center px-5 py-2 rounded-full bg-[var(--surface)] border border-[var(--border)] shadow-sm">
                       <h5 className="text-[12px] font-sans font-extrabold tracking-[0.2em] uppercase text-[var(--dark)] text-left">
                         {selectedProject.challengesLabel ?? "Engineering Challenges"}
