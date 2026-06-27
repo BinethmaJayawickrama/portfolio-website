@@ -13,14 +13,13 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
   const bottomCurtainRef = useRef<HTMLDivElement>(null);
   const progressRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
-  const circleRef = useRef<SVGCircleElement>(null);
   const pathBRef = useRef<SVGPathElement>(null);
   const pathJRef = useRef<SVGPathElement>(null);
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
     // Set initial stroke states for drawing
-    const paths = [circleRef.current, pathBRef.current, pathJRef.current];
+    const paths = [pathBRef.current, pathJRef.current];
     paths.forEach((path) => {
       if (path) {
         const length = path.getTotalLength();
@@ -38,27 +37,20 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
       },
     });
 
-    // 1. Draw SVG paths (1.4s)
-    if (circleRef.current) {
-      tl.to(circleRef.current, {
-        strokeDashoffset: 0,
-        duration: 1.4,
-        ease: "power2.inOut",
-      }, 0);
-    }
+    // 1. Draw SVG paths (starting immediately at 0s and 0.2s)
     if (pathBRef.current) {
       tl.to(pathBRef.current, {
         strokeDashoffset: 0,
-        duration: 1.2,
+        duration: 1.3,
         ease: "power2.inOut",
-      }, 0.2);
+      }, 0);
     }
     if (pathJRef.current) {
       tl.to(pathJRef.current, {
         strokeDashoffset: 0,
-        duration: 1.2,
+        duration: 1.3,
         ease: "power2.inOut",
-      }, 0.4);
+      }, 0.25);
     }
 
     // 2. Animate progress bar fill (1.8s)
@@ -132,33 +124,22 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
             xmlns="http://www.w3.org/2000/svg"
             className="mb-6 overflow-visible"
           >
-            {/* Outward Ring */}
-            <circle
-              ref={circleRef}
-              cx="50"
-              cy="50"
-              r="45"
-              stroke="var(--accent)"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-            />
-
-            {/* 'B' Path */}
+            {/* 'B' Ribbon Path */}
             <path
               ref={pathBRef}
-              d="M 38 30 L 38 70 M 38 30 H 48 C 55 30, 55 48, 38 48 H 45 C 53 48, 53 70, 38 70 Z"
+              d="M 36 65 C 36 65, 36 28, 36 28 C 36 28, 48 20, 48 36 C 48 46, 38 46, 36 46 C 36 46, 52 46, 52 60 C 52 70, 42 70, 36 70"
               stroke="var(--dark)"
-              strokeWidth="2.5"
+              strokeWidth="3.2"
               strokeLinecap="round"
               strokeLinejoin="round"
             />
 
-            {/* 'J' Path */}
+            {/* 'J' Ribbon Path (Interlocks and wraps under the B path) */}
             <path
               ref={pathJRef}
-              d="M 54 30 H 64 M 59 30 L 59 62 C 59 70, 48 70, 48 62"
+              d="M 48 28 C 48 28, 62 28, 62 28 M 56 28 L 56 58 C 56 68, 44 68, 38 68 C 32 68, 28 62, 28 56"
               stroke="var(--accent)"
-              strokeWidth="2.5"
+              strokeWidth="3.2"
               strokeLinecap="round"
               strokeLinejoin="round"
             />
