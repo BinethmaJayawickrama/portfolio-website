@@ -1,5 +1,7 @@
 # 💻 Binethma Jayawickrama — Personal Portfolio
 
+🌐 **Live Demo:** [binethma-jayawickrama.vercel.app](https://binethma-jayawickrama.vercel.app/)
+
 A premium, interactive, and fully responsive developer portfolio built with Next.js, React, Tailwind CSS, GSAP, and Resend. Designed to showcase modern web engineering projects, technical expertise, and extracurricular achievements with a sleek glassmorphic UI.
 
 ---
