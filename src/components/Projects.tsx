@@ -158,6 +158,30 @@ const projects: Project[] = [
   },
   {
     id: "05",
+    title: "TeamFlow",
+    category: "Productivity & Workspace Management",
+    tagline: "Role-Based Project & Task Management Platform (2026)",
+    description: "A collaborative workspace tool featuring dynamic role-based dashboards, secure JWT authorization, task tracking, and real-time alerts.",
+    longDescription: "TeamFlow is a production-ready project management application designed to align teams, automate project telemetry, and centralize documentation. Built using Next.js on the frontend and Express.js on the backend, it offers tailored workspaces for Admins, Project Managers, and Team Collaborators. It features a project-wide reports directory, live task checklists, interactive Kanban workflows, and a real-time event system driven by Socket.io.",
+    challengesLabel: "Key Features",
+    challenges: [
+      "Securing route configurations with dynamic JWT credentials and React RouteGuard constraints.",
+      "Configuring Prisma ORM with connection pooling via PgBouncer for low-latency queries.",
+      "Establishing instant socket notifications for project managers when deliverables are completed."
+    ],
+    results: [
+      "Completed a multi-tier role dashboard with zero permission boundary leaks.",
+      "Reduced database query overhead by implementing consolidated relation-includes in backend services.",
+      "Deployed frontend to Vercel and API servers to Railway with automated git webhook builds."
+    ],
+    tech: ["Next.js", "TypeScript", "Tailwind CSS", "Node.js", "PostgreSQL", "Supabase", "WebSockets"],
+    link: "https://github.com/BinethmaJayawickrama/TeamFlow-Project-",
+    website: "https://team-flow-project-sigma.vercel.app",
+    emoji: "📋",
+    gradient: "from-rose-500/20 to-orange-500/20 border-rose-500/30",
+  },
+  {
+    id: "06",
     title: "Vision Sync",
     category: "AI & Computer Vision",
     tagline: "AI Gesture Brightness Controller (2026)",
@@ -174,7 +198,7 @@ const projects: Project[] = [
       "Created smooth brightness steps using double exponential smoothing filters.",
       "Developed a system tray menu for easy startup configuration."
     ],
-    tech: ["Python 3.12", "MediaPipe", "OpenCV", "NumPy", "screen-brightness-control"],
+    tech: ["Python", "OpenCV", "FastAPI", "NumPy"],
     link: "https://github.com/BinethmaJayawickrama/vision-brightness-sync",
     emoji: "👁️",
     gradient: "from-teal-500/20 to-cyan-500/20 border-teal-500/30",
