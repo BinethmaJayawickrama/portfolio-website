@@ -332,7 +332,7 @@ export default function Projects() {
                 {/* ── Scrollable body ── */}
                 <div 
                   data-lenis-prevent
-                  className="overflow-y-auto flex-1 px-4 sm:px-12 md:px-20 pt-4 sm:pt-6 pb-12 sm:pb-16 flex flex-col gap-8 sm:gap-10 lg:gap-12"
+                  className="overflow-y-auto flex-1 px-8 sm:px-16 md:px-24 pt-6 sm:pt-8 pb-16 sm:pb-20 flex flex-col gap-8 sm:gap-10 lg:gap-12"
                 >
 
                   {/* Overview */}
